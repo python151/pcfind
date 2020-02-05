@@ -1,0 +1,51 @@
+{% extends 'headers/base.html' %}
+
+{% block head %}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{% endblock head %}
+
+{% block body %}
+<div id="paypal-button-container"></div>
+
+<div class="g-recaptcha" data-sitekey="
+AIzaSyDTeJ4yGzj0HkP87Bec7zoCpv3D6xvHlcI
+"></div>
+{% endblock body %}
+
+{% block html %}
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    async defer>
+</script>
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD" data-sdk-integration-source="button-factory"></script>
+<script>
+    paypal.Buttons({
+        style: {
+            shape: 'rect',
+            color: 'blue',
+            layout: 'vertical',
+            label: 'paypal',
+            
+        },
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: ''
+                    }
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+<script type="text/javascript">
+    var onloadCallback = function() {
+      alert("grecaptcha is ready!");
+    };
+  </script>
+  
+{% endblock html %}

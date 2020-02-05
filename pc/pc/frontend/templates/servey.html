@@ -1,0 +1,31 @@
+{% extends 'headers/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<div class="groups">
+    {% for group in options %}
+    <div class="group">
+        <h3 class="group-name">{{group.name}}</h3>
+        <div class="options">
+        {% for option in group.options %}
+            <div class="option">
+                <p class="option-name align-middle">{{ option.name }}</p>
+                <button class="btn btn-success align-middle" onclick="send({{forloop.counter}})">
+                    Add
+                </button>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock body %}
+
+{% block html %}
+
+<link rel="stylesheet" href="{% static 'servey.css' %}">
+<link rel="stylesheet" href="{% static 'javascript/send.css' %}">
+
+{% endblock html %}

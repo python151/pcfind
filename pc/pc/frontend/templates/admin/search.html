@@ -1,0 +1,14 @@
+{% extends "headers/base.html" %}
+
+{% block body %}
+<form type="POST" class="container" style="
+    margin-top: 10px;
+">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1" name="q">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Button</button>
+        </div>
+      </div>
+</form>
+{% endblock body %}

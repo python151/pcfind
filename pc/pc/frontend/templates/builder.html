@@ -1,0 +1,14 @@
+{% extends "headers/base.html" %}
+
+{% block body %}
+{% for part in parts %}
+<form class="media">
+    <input style="display: none;" name="id" value="{{part.id}}">
+    <button class="mr-3">Add to cart</button>
+    <div class="media-body">
+      <h5 class="mt-0">{part.name}}</h5>
+      {{part.description}}
+    </div>
+</form>
+{% endfor %}
+{% endblock body %}

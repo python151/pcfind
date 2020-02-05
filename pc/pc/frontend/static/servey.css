@@ -1,0 +1,49 @@
+.options {
+    padding-left: 2em;
+    
+}
+
+.groups {
+    padding: 2em 10px 0 2em;
+}
+
+.group {
+    padding-bottom: 2em;
+}
+
+.option {
+    height: 3em;
+
+    background-color: rgba(195, 193, 193, 0.603);
+
+    padding-bottom: 1em;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+    margin-bottom: 5px;
+}
+
+.option-name {
+    position: inline-block;
+    width: 10em;
+}
+
+.option > button {
+    width: 7em;
+    height: 3em;
+
+    float: right;
+    position: inline-block;
+}
+
+@media screen and (max-width: 400px) {
+    .options {
+        padding-left: 1em;
+        
+    }
+    
+    .groups {
+        padding: 1em 5px 0 1em;
+    }
+}
