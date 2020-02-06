@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from parts.models import Part
 from PriceCheckerApi.views import amazon
-
+import json
 
 # Create your views here.
 def index(request):
@@ -48,10 +48,10 @@ def showMeMore(request):
         return render(request, 'showMeMore.html')
 
 def formJSONAwnser(question, awnser):
-    return {
+    return str({
         'q' : question,
         'a' : awnser
-    }
+    })
 
 def select(request):
     req = request.POST.dict()
@@ -69,7 +69,7 @@ def select(request):
     elif a == 'add':
         request.session['q'] = request.session.get('q').append(jsonAwnser)
 
-    return "ok"
+    return render(request, "ok")
 
 def getPCs(request):
     request.session['page'] = 'PC Select'

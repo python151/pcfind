@@ -41,8 +41,25 @@
               </div>
             </li>
             
+            
+
             <li class="nav-item">
               <a class="nav-link" href="/nerd">Nerd Section</a>
+            </li>
+            
+            <div class="dropdown-divider"></div>
+
+            <li class="nav-item hidden">
+              <a class="nav-link" href="/nerd">Take the servey</a>
+            </li>
+            <li class="nav-item hidden">
+              <a class="nav-link" href="/nerd">About Us</a>
+            </li>
+            <li class="nav-item hidden">
+              <a class="nav-link" href="/nerd">What We Do</a>
+            </li>
+            <li class="nav-item hidden">
+              <a class="nav-link" href="/nerd">Privacy</a>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0" action="/admin/search">
@@ -50,8 +67,6 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
-
-        
       </nav>
         
 
@@ -102,29 +117,33 @@
     .nav-side ul li {
       white-space: nowrap;
       padding-top: 1em;
+      color:  white;
+      list-style-type: none;
+    }
+
+    .nav-side ul li a {
+      color:  white;
     }
 
     .body-w {
-      -webkit-padding-start: 5em;
       padding-left: 4em;
       overflow-x: hidden;
       margin-top: -5px;
     }
 
+    .hidden {
+        display: none;
+    }
+
     @media screen and (max-width: 400px) {
         .nav-side {
-          width: 3em;
+            display: none;
+        }
+        .hidden {
+            display: block;
         }
         .body-w {
-          padding-left: 3em;
-        }
-    }
-    @media screen and (max-width: 360px) {
-      .nav-side {
-          width: 2em;
-        }
-        .body-w {
-          padding-left: 2em;
+            padding-left: 0;
         }
     }
     @media screen and (max-width: 350px) {
@@ -135,6 +154,11 @@
 
     .navbar {
       margin-bottom: 0;
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+        border: solid skyblue 1px
     }
 </style>
 
