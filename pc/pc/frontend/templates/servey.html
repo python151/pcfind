@@ -4,6 +4,8 @@
 
 {% block body %}
 
+
+
 <div class="groups">
     {% for group in options %}
     <div class="group">
@@ -12,7 +14,7 @@
         {% for option in group.options %}
             <div class="option">
                 <p class="option-name align-middle">{{ option.name }}</p>
-                <button class="btn btn-success align-middle" onclick="send({{forloop.counter}})">
+                <button class="btn btn-success align-middle" id="question-{{forloop.counter}}" onclick="select({{forloop.counter}})">
                     Add
                 </button>
             </div>
@@ -26,6 +28,8 @@
 {% block html %}
 
 <link rel="stylesheet" href="{% static 'servey.css' %}">
-<link rel="stylesheet" href="{% static 'javascript/send.css' %}">
+
+{% csrf_token %}
+<script src="{% static 'javascript/send.js' %}"></script>
 
 {% endblock html %}

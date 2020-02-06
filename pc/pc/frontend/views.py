@@ -47,18 +47,27 @@ def showMeMore(request):
     if request.method == 'GET':
         return render(request, 'showMeMore.html')
 
+def formJSONAwnser(question, awnser):
+    return {
+        'q' : question,
+        'a' : awnser
+    }
+
 def select(request):
-    req = request.POST.getdict()
+    req = request.POST.dict()
 
     question = req["question"]
-    awnser = req["awnser"]
+    a = req["awnser"]
 
-    jsonAwnser = formJSONAwnser(question, awnser)
+    jsonAwnser = formJSONAwnser(question, a)
+
+    if not request.session.get('q'):
+        request.session['q'] = []
 
     if a == 'remove':
-        request.session['q'].pop(request.session['q'].index(jsonAwnser))
+        pass#request.session['q'] = request.session.get('q').pop(request.session.get('q').index(jsonAwnser))
     elif a == 'add':
-        request.session['q'].append(jsonAwnser)
+        request.session['q'] = request.session.get('q').append(jsonAwnser)
 
     return "ok"
 
