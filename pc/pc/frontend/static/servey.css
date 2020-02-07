@@ -26,18 +26,23 @@
 
 .option-name {
     position: inline-block;
+    margin: 5px;
+    font-size: 1.2em;
+
     width: 10em;
 }
 
-.option > button {
+.option > .btn {
     width: 7em;
     height: 3em;
+
+    font-size: 1em;
 
     float: right;
     position: inline-block;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 4110px) {
     .options {
         padding-left: 1em;
         
