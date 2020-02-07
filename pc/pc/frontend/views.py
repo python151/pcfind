@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from parts.models import Part
 from PriceCheckerApi.views import amazon
 import json
+from database.models import Group, Task
+from database.views import GetGroups
 
 # Create your views here.
 def index(request):
@@ -48,7 +50,7 @@ def showMeMore(request):
         return render(request, 'showMeMore.html')
 
 def formJSONAwnser(question, awnser):
-    return str({
+    return dict({
         'q' : question,
         'a' : awnser
     })
@@ -61,13 +63,14 @@ def select(request):
 
     jsonAwnser = formJSONAwnser(question, a)
 
-    if not request.session.get('q'):
+    if request.session.get('q') == None:
         request.session['q'] = []
 
     if a == 'remove':
         pass#request.session['q'] = request.session.get('q').pop(request.session.get('q').index(jsonAwnser))
     elif a == 'add':
-        request.session['q'] = request.session.get('q').append(jsonAwnser)
+        c = request.session.get('q')
+        new = c.append(jsonAwnser)
 
     return render(request, "ok")
 
@@ -80,39 +83,7 @@ def servey(request):
     request.session['page'] = 'Servey'
     if request.method == 'GET':
         return render(request, "servey.html", {
-            'options' : [
-                {
-                    "name" : "Productivity",
-                    "options" : [
-                        {
-                            "name" : "video editing"
-                        },
-                        {
-                            "name" : "photo editing"
-                        },
-                    ]
-                },
-                {
-                    "name" : "Gaming",
-                    "options" : [
-                        {
-                            "name" : "1080p gaming"
-                        },
-                        {
-                            "name" : "1440p gaming"
-                        },
-                        {
-                            "name" : "4k gaming"
-                        },
-                        {
-                            "name" : "triple monitor gaming"
-                        },
-                        {
-                            "name" : "streaming"
-                        },
-                    ]
-                },
-            ]
+            'options' : GetGroups()
         })
 
 

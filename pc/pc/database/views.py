@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from models import Groups
+from database.models import Group
 
 # Create your views here.
 def findPC(request):
@@ -10,16 +10,16 @@ def findPC(request):
 def GetGroups():
     ret = []
     
-    for i in Groups.all():
+    for i in Group.objects.all():
         opt = []
         for j in i.options.all():
             opt.append({
                 "name" : j.name
             })
-        {
+        ret.append({
             "name" : i.name,
             "options" : opt
-        }
+        })
 
     return ret
 
