@@ -1,17 +1,22 @@
 from django.db import models
 
 # Create your models here.
-class Example(models.Model):
+class PC(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=360)
+    name = models.CharField(max_length=90)
+    link = models.CharField(max_length=500)
+    cpu = models.SmallIntegerField(default=1)
+    gpu = models.SmallIntegerField(default=1)
+    ram = models.SmallIntegerField(default=1)
     class Meta():
         app_label='database'
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=90)
-    examples = models.ManyToManyField(Example)
-    groups = models.ManyToManyField("Group")
+    cpu = models.SmallIntegerField(default=1)
+    gpu = models.SmallIntegerField(default=1)
+    ram = models.SmallIntegerField(default=1)
     class Meta():
         app_label='database'
 

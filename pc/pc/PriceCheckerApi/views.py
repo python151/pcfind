@@ -39,7 +39,7 @@ def amazon(search):
     pages = getAmazonResults(search)
     ret = []
     for i in page:
-        quote_page = 'https://www.amazon.com/s?k='+search
+        quote_page = i
         page = urllib.request.urlopen(quote_page)
         soup = BeautifulSoup(page)
         s = soup.find('div', attrs={'id' : 'HLCXComparisonTable'})

@@ -19,9 +19,7 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('admin/search/', ad.cheapest),
-    path('admin/login/', ad.adminLogin),
+    path('admin/', admin.site.urls), 
 
     path('ajax/qa/', front.select),
 
@@ -29,6 +27,7 @@ urlpatterns = [
     path('show-me-more', front.showMeMore, name='Show Me More'),
 
     path('servey', front.servey, name='Servey'),
+    path('get-pc', front.getPCs, name='Get PC'),
 
     path('pourpose', front.pourpose, name='Pourpose'),
     path('presets', front.presets, name='Presets'),

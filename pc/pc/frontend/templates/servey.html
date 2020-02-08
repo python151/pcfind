@@ -7,21 +7,30 @@
 
 
 <div class="groups">
-    {% for group in options %}
+    {% for group in options %} 
     <div class="group">
         <h3 class="group-name">{{group.name}}</h3>
         <div class="options">
         {% for option in group.options %}
             <div class="option">
                 <p class="option-name align-middle">{{ option.name }}</p>
-                <button class="btn btn-success align-middle" id="question-{{forloop.counter}}" onclick="select({{forloop.counter}})">
+                {% if 'notSeen request, option.id' %}
+                <button class="btn btn-success align-middle" id="question-{{ option.id }}" onclick="select({{ option.id }})">
                     Add
                 </button>
+                {% else %}
+                <button class="btn btn-danger align-middle" id="question-{{ option.id }}" onclick="remove({{ option.id }})">
+                    X
+                </button>
+                {% endif %}
             </div>
         {% endfor %}
         </div>
     </div>
     {% endfor %}
+    <a href="get-pc" class="btn btn-primary">
+        Find My PC!
+    </a>
 </div>
 {% endblock body %}
 

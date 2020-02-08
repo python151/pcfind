@@ -73,7 +73,27 @@
 
 
         <div class="body-w">
+          <div class="body-f">
           {% block body %}{% endblock body %}
+          </div>
+          <div class="ads">
+            <div>
+            <script type="text/javascript">
+              amzn_assoc_tracking_id = "pcfinder-20";
+              amzn_assoc_ad_mode = "manual";
+              amzn_assoc_ad_type = "smart";
+              amzn_assoc_marketplace = "amazon";
+              amzn_assoc_region = "US";
+              amzn_assoc_design = "enhanced_links";
+              amzn_assoc_asins = "B07RF1XD36";
+              amzn_assoc_placement = "adunit";
+              amzn_assoc_linkid = "efea5ae202dea987c88861fa56bcbb2f";
+              </script>
+              <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US"></script>
+            </div>
+          </div>
+          
+        </iframe>
         </div>
         <div class="nav-side">
             <ul>
@@ -83,6 +103,7 @@
                 <li><a href="">Privacy</a></li>
             </ul>
         </div>
+        
 </body>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -102,6 +123,7 @@
       position: fixed;
       top: 55px;
       max-width: 90%;
+      
       z-index: 1000;
     }
 
@@ -132,6 +154,14 @@
       margin-top: -5px;
     }
 
+    .body-f {
+      position: relative;
+      height: 100%;
+      min-height: 100%;
+      box-sizing: border-box;
+      padding-bottom: 1em;
+    }
+
     .hidden {
         display: none;
     }
@@ -160,6 +190,12 @@
     .navbar-toggler:focus {
         outline: none;
         border: solid skyblue 1px
+    }
+
+    .ads {
+      position: relative;
+      bottom: 0;
+      margin-left: 1em;
     }
 </style>
 

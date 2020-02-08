@@ -26,6 +26,7 @@ function send(question, choice) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             var response = xhr.responseText;
+            console.log(response);
             if(response == "ok") {
                 console.log(params);
             }
@@ -38,18 +39,19 @@ function send(question, choice) {
 
 function select(num) {
     send(num, 'add');
-
-    q.onclick(remove(num.toString()));
-    q.value = "Del"
-    q.style.className = "btn btn-danger";let q = document.getElementById("question-"+num.toString());
+    console.log("select");
+    let q = document.getElementById("question-"+num.toString());
+    q.setAttribute( "onClick", "remove("+num+");" );
+    q.innerHTML = "X"
+    q.className = "btn btn-danger";
 }
 
 function remove(num) {
     send(num, 'remove');
-
+    console.log("remove")
     let q = document.getElementById("question-"+num.toString());
-    q.onclick(remove(num.toString()));
-    q.value = "Add"
+    q.setAttribute( "onClick", "select("+num+");" );
+    q.innerHTML = "Add"
     q.className = "btn btn-success";
 }
 

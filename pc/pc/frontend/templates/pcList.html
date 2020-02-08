@@ -1,0 +1,7 @@
+{% extends 'headers/base.html' %}
+
+{% block body %}
+    {% for pc in pcs %}
+        <a href="https://{{pc.link}}">{{pc.name}}</a>
+    {% endfor %}
+{% endblock body %}
