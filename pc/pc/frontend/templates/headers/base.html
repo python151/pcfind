@@ -19,7 +19,7 @@
 <body>
     <!-- this 100% NOT copied from the bootstrap documentation. garanteed -->
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Navbar - {{request.session.page}}</a>
+        <a class="navbar-brand" href="/"><img src="{% static 'logo.jpg' %}" width="25"> PC Finder - {{request.session.page}}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -31,20 +31,20 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                PC Options
+                More
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/setups">Setups</a>
-                <a class="dropdown-item" href="/pourpose">Pourpose build</a>
+                <a class="dropdown-item" href="/setups">Shout Outs</a>
+                <a class="dropdown-item" href="/pourpose">Policies</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/budget">On a budget?</a>
+                <a class="dropdown-item" href="/budget">Who we are</a>
               </div>
             </li>
             
             
 
             <li class="nav-item">
-              <a class="nav-link" href="/nerd">Nerd Section</a>
+              <a class="nav-link" href="/static/?page=about">About</a>
             </li>
             
             <div class="dropdown-divider"></div>

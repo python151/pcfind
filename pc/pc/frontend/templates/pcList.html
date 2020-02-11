@@ -1,7 +1,12 @@
 {% extends 'headers/base.html' %}
 
 {% block body %}
+<div class="pcs">
+    {% if pc is not defined %} 
+        Sorry, No Pc's Found
+    {% endif %}
     {% for pc in pcs %}
-        <a href="https://{{pc.link}}">{{pc.name}}</a>
+        <a href="{{pc.link}}">{{pc.name}}</a>
     {% endfor %}
+</div>
 {% endblock body %}

@@ -14,9 +14,9 @@ function getCookie(cname) {
     return "";
 }
 
-function send(question, choice) {
+function send(question, num1, choice) {
     var url = "/ajax/qa/";
-    var params = "question="+question+"&awnser="+choice;
+    var params = "question="+question+"&awnser="+choice+"&group="+num1;
     var xhr = new XMLHttpRequest();
     var csrftoken = getCookie('csrftoken');
     xhr.open("POST", url, true);
@@ -37,20 +37,20 @@ function send(question, choice) {
     }
 }
 
-function select(num) {
-    send(num, 'add');
+function select(num, num1) {
+    send(num, num1, 'add');
     console.log("select");
     let q = document.getElementById("question-"+num.toString());
-    q.setAttribute( "onClick", "remove("+num+");" );
+    q.setAttribute( "onClick", "remove("+num+", "+num1+");" );
     q.innerHTML = "X"
     q.className = "btn btn-danger";
 }
 
-function remove(num) {
-    send(num, 'remove');
+function remove(num, num1) {
+    send(num, num1, 'remove');
     console.log("remove")
     let q = document.getElementById("question-"+num.toString());
-    q.setAttribute( "onClick", "select("+num+");" );
+    q.setAttribute( "onClick", "select("+num+", "+num1+");" );
     q.innerHTML = "Add"
     q.className = "btn btn-success";
 }

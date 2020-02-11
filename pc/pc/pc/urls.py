@@ -24,16 +24,9 @@ urlpatterns = [
     path('ajax/qa/', front.select),
 
     path('', front.index, name='Home'),
-    path('show-me-more', front.showMeMore, name='Show Me More'),
 
     path('servey', front.servey, name='Servey'),
     path('get-pc', front.getPCs, name='Get PC'),
 
-    path('pourpose', front.pourpose, name='Pourpose'),
-    path('presets', front.presets, name='Presets'),
-    path('budget', front.budget, name='Budget'),
-    path('setups', front.setup, name='Setup'),
-
-    path('pay', front.pay, name='Pay'),
-    path('cart', front.cart, name='Cart'),
+    path('static/', front.statPage, name='Static Page'),
 ]

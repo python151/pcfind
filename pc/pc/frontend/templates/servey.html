@@ -14,12 +14,12 @@
         {% for option in group.options %}
             <div class="option">
                 <p class="option-name align-middle">{{ option.name }}</p>
-                {% if 'notSeen request, option.id' %}
-                <button class="btn btn-success align-middle" id="question-{{ option.id }}" onclick="select({{ option.id }})">
+                {% if 't' %}
+                <button class="btn btn-success align-middle" id="question-{{ option.id }}" onclick="select({{ option.id }}, {{ group.id }})">
                     Add
                 </button>
                 {% else %}
-                <button class="btn btn-danger align-middle" id="question-{{ option.id }}" onclick="remove({{ option.id }})">
+                <button class="btn btn-danger align-middle" id="question-{{ option.id }}" onclick="remove({{ option.id }}, {{ group.id }})">
                     X
                 </button>
                 {% endif %}

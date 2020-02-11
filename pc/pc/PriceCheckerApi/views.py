@@ -2,6 +2,8 @@ from django.shortcuts import render
 import urllib.request
 import urllib.parse
 from bs4 import BeautifulSoup
+from requests_html import HTMLSession
+from urllib.request import FancyURLopener
 
 def getEbayResults(search):
     search = urllib.parse.quote_plus(search)
@@ -30,20 +32,28 @@ def ebay(q):
 def getAmazonResults(search):
     search = urllib.parse.quote_plus(search)
     quote_page = 'https://www.amazon.com/s?k='+search
-    print(quote_page)
-    page = urllib.request.urlopen(quote_page)
+
+    class MyOpener(FancyURLopener):
+        version = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11'
+    myopener = MyOpener()
+    page = myopener.open(quote_page)
     soup = BeautifulSoup(page)
-    return soup.findAll('div', attrs={'class' : 'a-link-normal a-text-normal'})['href']
+    return soup.find('a', attrs={'class' : 'a-link-normal a-text-normal'}).get('href')
 
 def amazon(search):
     pages = getAmazonResults(search)
+    print(pages)
     ret = []
-    for i in page:
-        quote_page = i
-        page = urllib.request.urlopen(quote_page)
+    for i in pages:
+        quote_page = 'https://amazon.com'+i
+        class MyOpener(FancyURLopener):
+            version = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11'
+        myopener = MyOpener()
+        page = myopener.open(quote_page)
         soup = BeautifulSoup(page)
         s = soup.find('div', attrs={'id' : 'HLCXComparisonTable'})
         ret.append(s)
+    print(ret)
     return ret 
 
 

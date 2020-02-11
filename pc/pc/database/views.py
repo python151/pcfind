@@ -1,39 +1,56 @@
 from django.shortcuts import render
-from database.models import Group, PC, Task
+from database.models import Group, PC, Task, Choice
 
 # Create your views here.
-def findPC(request):
-    activities = request.session.get('q')
-    for i in activities:
-        print(i.get('q'))
 
 def GetGroups():
     ret = []
-    
-    for i in Group.objects.all():
+
+    for i in Group.objects.order_by('selected')[::-1]:
         opt = []
-        for j in i.options.all():
+        for j in i.options.order_by('selected')[::-1]:
             opt.append({
                 "name" : j.name,
                 "id" : j.id,
             })
         ret.append({
             "name" : i.name,
-            "options" : opt
+            "options" : opt,
+            "id" : i.id
         })
-
     return ret
 
 def findPC(request):
-    q = request.session.get('q')
+    try: q = request.session.get('q')
+    except: q = []
+    choiceObj = Choice.objects.create()
     qs = []
-    for i in q:
-        qs.append(Task.objects.filter(id=i.get('id')).get())
+    try: 
+        for i in q:
+            iObj = Task.objects.filter(id=i.get('id')).get()
+            print(iObj.selected)
+            iObj.selected = iObj.selected+1
+            iObj.save()
+            choiceObj.tasks.add(iObj)
+            qs.append(iObj)
+
+    except: return {'pcs' : []}
+
+    for i in request.session.get('group'):
+        g = Group.objects.filter(id=i).get()
+        print(g.selected)
+        g.selected = g.selected+1
+        g.save()
+        
+
+        
+
     highest = {
         'cpu' :  qs[0].cpu,
         'gpu' : qs[0].gpu,
         'ram' : qs[0].ram,
     }
+
     for i in qs:
         if i.cpu > highest.get('cpu'):
             highest['cpu'] = i.cpu
@@ -41,7 +58,14 @@ def findPC(request):
             highest['gpu'] = i.gpu
         if i.ram > highest.get('ram'):
             highest['ram'] = i.ram
-    return {'pcs' : PC.objects.filter(cpu=highest.get('cpu'), gpu=highest.get('gpu'), ram=highest.get('ram')).all()}
+        
+    pcs = PC.objects.filter(
+    cpu=highest.get('cpu'),
+     gpu=highest.get('gpu'),
+      ram=highest.get('ram')).all()
+    
+
+    return {'pcs' : pcs}
         
         
     

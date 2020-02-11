@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from parts.models import Part
 from PriceCheckerApi.views import amazon, ebay
 import json
 from database.models import Group, Task
@@ -85,23 +84,59 @@ def select(request):
 
     q = req["question"]
     a = req["awnser"]
+    g = req["group"]
 
     jsonAwnser = formJSONAwnser(q)
 
     if request.session.get('q') == None:
         request.session['q'] = [jsonAwnser]
+    
+    if request.session.get('group') == None:
+        request.session['group'] = []
+
+    try:
+        if request.session.get('group')[0] == 'undefined':
+            ww = request.session.get('group')
+            ww.pop(0)
+            request.session['group'] = ww
+    except: pass
 
     if a == 'remove':
         c = request.session.get('q')
         c.pop(c.index(jsonAwnser))
         request.session['q'] = c
+
+        s = request.session.get('group')
+        if s != None and s != [None]:
+            print(s)
+            a1 = s.index(g)
+            s.pop(a1)
+        request.session['group'] = s
     elif a == 'add':
         c = request.session.get('q')
         if jsonAwnser not in c:
             c.append(jsonAwnser)
             request.session['q'] = c
-    print(request.session.get('q'))
+        print(g)
+        c1 = request.session.get('group')
+        c1.append(g)
+        request.session['group'] = c1
+    print(request.session.get('q'), request.session.get('group'))
 
     return render(request, "ok")
 
+def statPage(request):
+    page = request.GET.get('page', None)
+    pages = ["about", "privacy-policy", "what-we-do", "cookie-policy"]
+    try:
+        if page in pages:
+            pageAdapted = page.replace('-', ' ')
+            request.session['page'] = pageAdapted.title()
+            ret = render(request, "static/"+page+'.html')
+        else:
+            raise ValueError("page not allowed")
+    except ValueError:
+        request.session['page'] = "404"
+        ret = render(request, "404.html")
+    return ret
 
