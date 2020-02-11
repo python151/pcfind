@@ -4,33 +4,34 @@
 
 {% block body %}
 
-    <div class="container">
-        <div style="padding-top: 1em; padding-bottom: 2em; margin-bottom: 2em;" class="row">
-            <div class="col mx-auto" style="min-width: 300px;">
+        <div style="padding-top: 1em; padding-bottom: 2em; margin-bottom: 2em;" class="promo text-center">
+            <div class="container">
                 <h3 class="display-4">A better way to shop for computers</h3>
                 <p class="lead">
                     Take a short survey and allow us to help you find your next computer or PC, and stop guessing at which computer to buy.
                 </p>
                 <div class="wrapper">
                     <a class="btn btn-primary btn-lg mx-auto"
-                    style="background-color: #042a2b; color:#fff; width: 300px; margin-bottom: 2em; padding: 7%; width: 100%;"
+                    style="background-color: #0000005b; color:#ffffff; width: 20em; margin-bottom: 2em; padding: 2%; border: 0; font-weight: lighter;"
                     href="servey"
                     >Take The Survey</a>
-                    </div>
-            </div>
-            <div class="col-6" style="width: 100%; min-width: 320px;">
-                <img src="https://images.pexels.com/photos/2225617/pexels-photo-2225617.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
-                style="width: 100%;">
-            </div>
-        </div>
+                    </div></div>
     </div>
+<div class="container">
+    <div class="lead">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus molestias nostrum sapiente repellendus ratione asperiores facilis aspernatur doloribus dignissimos quasi excepturi magni nulla voluptatibus exercitationem in fugit, accusamus provident. Numquam.
+        lor
+    </div>
+</div>
+    
 {% endblock body %}
 
 {% block html %}
 
 <style>
-.lead {
-    color: #6f6f6f;
+.promo .lead {
+    color: #cecccc;
+    display: block;
 }
 
 .btn .btn-outline-dark:hover {
@@ -41,6 +42,11 @@
     .display-4 {
         font-size: 3em;
     }
+}
+.promo {
+    color: #fff;
+    background: url(https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260);
+    background-size: cover;
 }
 
 </style>
