@@ -17,6 +17,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls), 
@@ -28,5 +30,5 @@ urlpatterns = [
     path('servey', front.servey, name='Servey'),
     path('get-pc', front.getPCs, name='Get PC'),
 
-    path('static/', front.statPage, name='Static Page'),
-]
+    path('static/', front.statPage, name='Static Page')
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

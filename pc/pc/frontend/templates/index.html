@@ -4,7 +4,7 @@
 
 {% block body %}
 
-        <div style="padding-top: 1em; padding-bottom: 2em; margin-bottom: 2em;" class="promo text-center">
+        <div style="padding-top: 1em; padding-bottom: 2em;" class="promo text-center">
             <div class="container">
                 <h3 class="display-4">A better way to shop for computers</h3>
                 <p class="lead">
@@ -12,18 +12,26 @@
                 </p>
                 <div class="wrapper">
                     <a class="btn btn-primary btn-lg mx-auto"
-                    style="background-color: #0000005b; color:#ffffff; width: 20em; margin-bottom: 2em; padding: 2%; border: 0; font-weight: lighter;"
+                    style="background-color: #0000005b; color:#ffffff; width: 40%; margin-bottom: 2em; padding: 2%; border: 0; font-weight: lighter; min-width: 13em;"
                     href="servey"
                     >Take The Survey</a>
                     </div></div>
     </div>
-<div class="container">
-    <div class="lead">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Necessitatibus molestias nostrum sapiente repellendus ratione asperiores facilis aspernatur doloribus dignissimos quasi excepturi magni nulla voluptatibus exercitationem in fugit, accusamus provident. Numquam.
-        lor
+
+<div class="lead" style="padding: 50px; padding-bottom: 0;">
+    <div class="display-4" style="font-size: 30px; margin-bottom: 8px;">
+        About
     </div>
+    We are a company that automatically searches the web for a computer that will fit your needs, and the best part is it's all free! 
 </div>
-    
+
+<div class="lead" style="padding: 50px;">
+    <div class="display-4" style="font-size: 30px; margin-bottom: 8px;">
+        Privacy
+    </div>
+    Here at [INSERT NAME HERE] we beleive in privacy and never track you. Though we do send non-tracking cookies to make sure that you get the right results on your survey.
+</div>
+
 {% endblock body %}
 
 {% block html %}
@@ -47,8 +55,17 @@
     color: #fff;
     background: url(https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260);
     background-size: cover;
+    min-height: 400px;
 }
 
+.jumbotron {
+    margin-bottom: 5px;
+}
+
+.jumbo-w {
+    background-color: rgb(5, 44, 95);
+    padding: 5px 0;
+}
 </style>
 
 {% endblock html %}
