@@ -13,36 +13,24 @@ def notSeen(request, id):
 # Static Pages
 def index(request):
     request.session.flush()
+    amazon('pc')
     request.session['page'] = 'Home'
     return render(request, 'index.html')
 
-def pay(request):
-    request.session['page'] = 'Pay'
-    return render(request, 'pay.html')
-
-def pourpose(request):
-    request.session['page'] = 'Pourpose Builds'
-    return render(request, 'pourpose.html')
-
-def cart(request):
-    request.session['page'] = 'Cart'
-    return render(request, 'pourpose.html')
-
-def budget(request):
-    request.session['page'] = 'Budget Computers'
-    if request.method == 'GET':
-        return render(request, 'budget.html')
-
-def setup(request):
-    request.session['page'] = 'Full setups'
-    if request.method ==  'GET':
-        return render(request, 'setup.html')
-
-def showMeMore(request):
-    request.session['page'] = 'Show Me More'
-    if request.method == 'GET':
-        return render(request, 'showMeMore.html')
-
+def statPage(request):
+    page = request.GET.get('page', None)
+    pages = ["about", "privacy-policy", "what-we-do", "cookie-policy"]
+    try:
+        if page in pages:
+            pageAdapted = page.replace('-', ' ')
+            request.session['page'] = pageAdapted.title()
+            ret = render(request, "static/"+page+'.html')
+        else:
+            raise ValueError("page not allowed")
+    except ValueError:
+        request.session['page'] = "404"
+        ret = render(request, "404.html")
+    return ret
 
 # Dynamic Pages
 
@@ -125,18 +113,5 @@ def select(request):
 
     return render(request, "ok")
 
-def statPage(request):
-    page = request.GET.get('page', None)
-    pages = ["about", "privacy-policy", "what-we-do", "cookie-policy"]
-    try:
-        if page in pages:
-            pageAdapted = page.replace('-', ' ')
-            request.session['page'] = pageAdapted.title()
-            ret = render(request, "static/"+page+'.html')
-        else:
-            raise ValueError("page not allowed")
-    except ValueError:
-        request.session['page'] = "404"
-        ret = render(request, "404.html")
-    return ret
+
 
