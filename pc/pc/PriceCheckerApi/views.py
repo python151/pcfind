@@ -6,6 +6,7 @@ from requests_html import HTMLSession
 from urllib.request import FancyURLopener
 from database.models import PC
 import requests
+from user_agent import generate_user_agent
 
 def getEbayResults(search):
     search = urllib.parse.quote_plus(search)
@@ -34,13 +35,8 @@ def ebay(q):
 def getAmazonResults(search):
     search = urllib.parse.quote_plus(search)
     quote_page = 'https://www.amazon.com/s?k='+search
-
-    class MyOpener(FancyURLopener):
-        version = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Firefox/2.0.0.11'
-    myopener = MyOpener()
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36'}
+    headers = {'User-Agent': generate_user_agent(device_type="desktop", os=('mac', 'linux'))}
     r = requests.get(quote_page, headers=headers)
-    page = myopener.open(quote_page)
     soup = BeautifulSoup(r.content)
     print(soup.prettify())
     return soup.find_all('a', attrs={'class' : 'a-link-normal a-text-normal'})
@@ -58,39 +54,53 @@ def amazon(search):
         soup = BeautifulSoup(page)
         s = soup.find('table', attrs={'id' : 'productDetails_techSpec_section_1'})
 
-        s1 = s.find_all('tr')
-        for s in s1:
-            s2 = s.find_all('th')
-            base = s2[0].value
-            if base == 'Processor':
-                cpuV = s2[1].value
-            if base == 'RAM':
-                ramV = s2[1].value
-            if base == 'Card Description':
-                if s2[1].value != 'Dedicated':
-                    iGpu = True
-                    gpuV = 1
-            if base == 'Graphics Card Ram Size' and not iGpu:
-                v = s2[1].value
-                v1 = int(v.replace(' GB', ''))
-                if v1 <= 3:
-                    gpuV = 2
-                elif v1 <= 5:
-                    gpuV = 3
-                elif v1 <= 8:
-                    gpuV = 4
-                else:
-                    gpuV = 5
-        #print(s)
-        val = PC.objects.create(name=soup.find('span', attrs={'id':'title'}).value,
-        link = quote_page,
-        price = soup.find('span', attrs={'id':'price-large'}),
-        cpu = cpuV,
-        gpu = gpuV,
-        ram = ramV
-        )
-        val.save()
-        print(cpuV, ramV, gpuV)
+        try: 
+            s1 = s.find_all('tr')
+            cpuV, ramV, gpuV = 0, 0, 0
+            print(s1)
+            for ss in s1:
+                try:
+                    s2 = ss.find('th')
+                    s3 = ss.find('td')
+                except:
+                    break
+
+                print("for 1 started \n\n\n\n\n\n\n\n\n\n")
+                print(s2, s3)
+                base = s2.text.replace(' ', '')
+                print(base)
+                if base == 'Processor':
+                    cpuV = int(s3.text.split(' G')[0].replace(' ', ''))
+                if base == 'RAM':
+                    ramV =int(s3.text.split(' G')[0].replace(' ', ''))
+                if base == 'CardDescription':
+                    if s3.text != 'Dedicated':
+                        iGpu = True
+                        gpuV = 1
+                if base == 'GraphicsCardRamSize' and not iGpu:
+                    v = s3.text
+                    v1 = int(v.replace(' GB', ''))
+                    if v1 <= 3:
+                        gpuV = 2
+                    elif v1 <= 5:
+                        gpuV = 3
+                    elif v1 <= 8:
+                        gpuV = 4
+                    else:
+                        gpuV = 5
+            #print(s)
+            try: 
+                val = PC.objects.create(name=soup.find('span', attrs={'id':'productTitle'}).text,
+                link = quote_page,
+                price =int(soup.find('span', attrs={'id':'priceblock_ourprice'}).text.replace('$', '').split('.')[0].replace(',', '')),
+                cpu = cpuV,
+                gpu = gpuV,
+                ram = ramV
+                )
+                val.save()
+                print(cpuV, ramV, gpuV)
+            except: print("problem")
+        except: print("prob1")
     return 'h'
 
 

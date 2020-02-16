@@ -34,7 +34,7 @@ def findPC(request):
             choiceObj.tasks.add(iObj)
             qs.append(iObj)
 
-    except: return {'pcs' : []}
+    except: return {}
 
     for i in request.session.get('group'):
         g = Group.objects.filter(id=i).get()
@@ -64,8 +64,9 @@ def findPC(request):
      gpu=highest.get('gpu'),
       ram=highest.get('ram')).all()
     
-
-    return {'pcs' : pcs}
+    if pcs == []:
+        return {'pcs' : pcs}
+    else: return {}
         
         
     
