@@ -6,7 +6,7 @@
         Sorry, No Pc's Found
     {% endif %}
     {% for pc in pcs %}
-        <a href="{{pc.link}}">{{pc.name}}</a>
+        <a href="{{pc.link}}">{{pc.name}} - {{pc.price}}</a><br>
     {% endfor %}
 </div>
 {% endblock body %}

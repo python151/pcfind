@@ -103,10 +103,92 @@ def amazon(search):
         except: print("prob1")
     return 'h'
 
+class options:
+    options = [
+        {
+            "base" : "Processor",
+            "max-1" : 2.1,
+            "max-2" : 3.1,
+            "max-3" : 4.3,
+            "max-4" : 5,
+        },
+        {
+            "base" : "RAM",
+            "max-1" : 5,
+            "max-2" : 9,
+            "max-3" : 17,
+            "max-4" : 65,
+        },
+        {
+            "base" : "Graphics Card Ram Size",
+            "max-1" : 3,
+            "max-2" : 5,
+            "max-3" : 8,
+            "max-4" : 12,
+        },
+    ]
 
+def convertToInt(text):
+    ret = text.split(" G")
+    ret = ret[0].replace(" ", "")
+    ret = ret.replace("\n", "")
+    return float(ret)
+
+def amazonFill(id):
+    get = PC.objects.get(id=id)
+    print(get.name)
+    if get == None:
+        raise ValueError("id not found")
+    elif get.cpu != 0:
+        raise ValueError("PC specs already filled")
     
-        
+    quote_page = get.link
+    headers = {'User-Agent': generate_user_agent(device_type="desktop", os=('mac', 'linux'))}
+    r = requests.get(quote_page, headers=headers)
+    soup = BeautifulSoup(r.content)
 
+    table = soup.find('table', attrs={'id' : 'productDetails_techSpec_section_1'})
+    rows = table.find_all('tr')
 
+    print(rows)
 
+    for row in rows:
+        base = row.find("th")
+        value = row.find("td")
+        baseText = base.text
+        valueText = value.text
 
+        integratedGPU = False
+        GPURam = 0
+
+        for option in options.options:
+            optionBase = option.get("base").replace(" ", "").replace("\n", "")
+            print(optionBase, baseText.replace(" ", "").replace("\n", ""))
+            if optionBase == "Card Description":
+                if valueText != "Dedicated":
+                    integratedGPU = True
+            elif optionBase == baseText.replace(" ", "").replace("\n", ""):
+                print("check")
+                highest = -1
+                intVal = convertToInt(valueText)
+                
+                if intVal > option.get("max-3"):
+                    highest = 4
+                if intVal <= option.get("max-3"):
+                    highest = 3
+                if intVal <= option.get("max-2"):
+                    highest = 2
+                if intVal <= option.get("max-1"):
+                    highest = 1
+                print(intVal, highest)
+                if optionBase == "Processor":
+                    get.cpu = highest
+                elif optionBase == "RAM":
+                    get.ram = highest
+                elif integratedGPU:
+                    get.gpu = 1
+                elif optionBase == "Graphics Card Ram Size":
+                    get.gpu = highest+1 
+                get.save()
+            else:
+                print("false")

@@ -58,13 +58,14 @@ def findPC(request):
             highest['gpu'] = i.gpu
         if i.ram > highest.get('ram'):
             highest['ram'] = i.ram
+
+    print(highest)
         
     pcs = PC.objects.filter(
     cpu=highest.get('cpu'),
-     gpu=highest.get('gpu'),
-      ram=highest.get('ram')).all()
+      ram=highest.get('ram')).order_by("price")
     
-    if pcs == []:
+    if pcs != []:
         return {'pcs' : pcs}
     else: return {}
         

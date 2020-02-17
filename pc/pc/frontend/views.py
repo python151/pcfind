@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from PriceCheckerApi.views import amazon, ebay
+from PriceCheckerApi.views import amazon, ebay, amazonFill
 import json
 from database.models import Group, Task
 from database.views import GetGroups, findPC
@@ -13,7 +13,6 @@ def notSeen(request, id):
 # Static Pages
 def index(request):
     request.session.flush()
-    amazon('pc')
     request.session['page'] = 'Home'
     return render(request, 'index.html')
 
