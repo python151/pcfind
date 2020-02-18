@@ -41,9 +41,6 @@ def findPC(request):
         print(g.selected)
         g.selected = g.selected+1
         g.save()
-        
-
-        
 
     highest = {
         'cpu' :  qs[0].cpu,
@@ -65,8 +62,14 @@ def findPC(request):
     cpu=highest.get('cpu'),
       ram=highest.get('ram')).order_by("price")
     
-    if pcs != []:
-        return {'pcs' : pcs}
+    for pc in pcs:
+        if pcs.filter(name=pc.name, price=pc.price).all().count() != 1:
+            pc.delete()
+
+
+    if pcs.count() != 0:
+        print('h')
+        return {'pcs' : pcs, 'pcCount' : pcs.count()}
     else: return {}
         
         

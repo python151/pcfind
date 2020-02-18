@@ -2,11 +2,17 @@
 
 {% block body %}
 <div class="pcs">
-    {% if pc is not defined %} 
-        Sorry, No Pc's Found
-    {% endif %}
+    <div class="display-4">
+        {% if pcs is defined %}Sorry, No{% endif %}{{pcCount}} Computers's found
+    </div>
+
     {% for pc in pcs %}
-        <a href="{{pc.link}}">{{pc.name}} - {{pc.price}}</a><br>
+    <div class="card" style="margin: 1em;">
+        <a class="lead" href="{{pc.link}}">{{pc.name}} - {{pc.price}}</a><br>
+    </div>
     {% endfor %}
+    {% if pcs is defined %} 
+        <div class="lead" style="margin-left: 1em;">No Pc's Found, but you can try again later to see if we find more options</div>
+    {% endif %}
 </div>
 {% endblock body %}

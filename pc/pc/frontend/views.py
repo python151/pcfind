@@ -16,8 +16,8 @@ def index(request):
     request.session['page'] = 'Home'
     return render(request, 'index.html')
 
-def statPage(request):
-    page = request.GET.get('page', None)
+def statPage(request, name):
+    page = name
     pages = ["about", "privacy-policy", "what-we-do", "cookie-policy"]
     try:
         if page in pages:
