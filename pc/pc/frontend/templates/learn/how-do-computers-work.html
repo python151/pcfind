@@ -1,0 +1,18 @@
+{% extends 'headers/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<div class="container" style="padding-top: 2em;">
+    <div class="display-4" style="margin-bottom:.5em;">How Computers Work</div>
+    <div class="lead" style="margin-bottom: 10px;">
+        Computers have lots of parts to them, the main parts in a computer are a CPU, GPU, RAM, PSU, and a Motherboard. The motherboard 'ties everything together' in a way because it is what everything is connected to and makes all the other parts work together. The CPU is a part that actually does calculations and runs instructions written by a programmer, these instructions consist of 1's and 0's but when the programmer writes them they are more like a readable language which gets translated or compiled down to machine code. RAM (Random Access Memory), is what stores everything while the code is running so the actuall code and anything on screen. The GPU is what translates what the CPU sends through the Motherboard to a video signal you can see on the screen. Finally the PSU, or Power Supply Unit, is the thing that brings power to the entire system.
+    </div>
+    <div style="background:url({% static 'computer.jpg' %}); background-size: cover; width: 800px; height: 500px; max-width: 80%;"></div>
+    <div class="lead">
+        The image above is the motherboard of a computer.
+    </div>
+</div>
+
+{% endblock body %}

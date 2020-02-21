@@ -30,5 +30,8 @@ urlpatterns = [
     path('survey', front.servey, name='Servey'),
     path('get-pc', front.getPCs, name='Get PC'),
 
+    path('learn/<slug:lessonName>', front.lesson, name='Learn'),
     path('stat/<slug:name>', front.statPage, name='Static Page'),
+
+    path('join/mailing-list', front.mailingListSignUp, name="Join Mailing List"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

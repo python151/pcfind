@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from PriceCheckerApi.views import amazon, ebay, amazonFill
 import json
-from database.models import Group, Task
+from database.models import Group, Task, Email
 from database.views import GetGroups, findPC
-
+from django.views.decorators.csrf import csrf_protect
 # functions
 
 def notSeen(request, id):
@@ -12,13 +12,20 @@ def notSeen(request, id):
 
 # Static Pages
 def index(request):
-    request.session.flush()
     request.session['page'] = 'Home'
-    return render(request, 'index.html')
+    return render(request, 'index.html', {
+        "words" : [
+            " smarter",
+            " better",
+            " brilliant",
+            " genius",
+            "n amazing",
+        ]
+    })
 
 def statPage(request, name):
     page = name
-    pages = ["about", "privacy-policy", "what-we-do", "cookie-policy"]
+    pages = ["about", "privacy-policy", "what-we-do", "cookie-policy", "shout-out"]
     try:
         if page in pages:
             pageAdapted = page.replace('-', ' ')
@@ -43,7 +50,7 @@ def servey(request):
     if request.method == 'GET': 
         return render(request, "servey.html", {
             'options' : GetGroups(),
-            'notSeen' : notSeen
+            's' : request.session.get('q')
         })
 
 
@@ -62,14 +69,14 @@ def presets(request):
         return redirect('cart')
 
 def formJSONAwnser(q):
-    return dict({
-        'id' : q
-    })
+    return int(q)
+    
 
+@csrf_protect
 def select(request):
     req = request.POST.dict()
 
-    q = req["question"]
+    q = int(req["question"])
     a = req["awnser"]
     g = req["group"]
 
@@ -112,5 +119,31 @@ def select(request):
 
     return render(request, "ok")
 
+def lesson(request, lessonName):
+    lessons=["how-do-computers-work"]
+    if lessonName in lessons:
+        request.session['page'] = "Learn"
+        return render(request, "learn/"+lessonName+'.html')
+    else:
+        request.session['page'] = "404"
+        return render(request, '404.html')
+
+def mailingListSignUp(request):
+    req = request.POST.dict()
+
+    ref = req.get("ref")
+
+    name = req.get("name")
+    email = req.get("email")
+
+    try: Email.objects.filter(email=email).get()
+
+    except:
+        if name != "" and email != "":
+
+            databaseObj = Email.objects.create(name=name, email=email)
+            databaseObj.save()        
+    
+    return redirect(ref)
 
 

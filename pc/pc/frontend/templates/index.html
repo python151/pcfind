@@ -4,42 +4,23 @@
 
 {% block body %}
 
-        <div style="padding-top: 1em; padding-bottom: 2em;" class="promo text-center">
-            <div class="container">
-                <h3 class="display-4">A smarter way to shop for computers</h3>
-                <p class="lead">
-                    Take a short survey and allow us to help you find your next computer or PC, and stop guessing at which computer to buy.
-                </p>
-                <div class="wrapper">
-                    <a class="btn btn-primary btn-lg mx-auto"
-                    style="background-color: #0000005b; color:#ffffff; width: 40%; margin-bottom: 2em; padding: 2%; border: 0; font-weight: lighter; min-width: 13em;"
-                    href="survey"
-                    >Take The Survey</a>
-                    </div></div>
+    <div style="padding-top: 1em; padding-bottom: 2em;" class="promo text-center flex-column">
+        <div class="container">
+            <h3 class="display-4 flox-row-sm">A{{words|random}} way to shop for computers</h3>
+            <p class="lead flox-row-sm">
+                Take a short survey and allow us to help you find your next computer or PC, and stop guessing at which computer to buy.
+            </p>
+            <div class="wrapper flox-row-md">
+                <a class="btn btn-primary btn-lg mx-auto"
+                style="background-color: #0000005b; color:#ffffff; width: 40%; margin-bottom: 2em; padding: 2%; border: 0; font-weight: lighter; min-width: 13em;"
+                href="survey"
+                >Take The Survey</a>
+            </div>
+        </div>
     </div>
 
-<div class="lead" style="padding: 50px; padding-bottom: 0;">
-    <div class="display-4" style="font-size: 30px; margin-bottom: 8px;">
-        How we choose your computer
-    </div>
-    When we are choosing your computer we consider 3 main things. The CPU, the GPU, and the RAM. Each task you do on a computer requires a diffrent ammount of all of these things. For example a Gamer would need a bigger GPU than someone who is 3D modeling which would require more RAM. When we choose your computer we take all of your tasks into consideration to find the best computer that will fit your needs for the lowest price. <a href="/learn/choose-a-pc">Click here for more details.</a>
-</div>
 
-<div class="lead" style="padding: 50px; padding-bottom: 0;">
-    <div class="display-4" style="font-size: 30px; margin-bottom: 8px;">
-        About
-    </div>
-    We are a company that automatically searches the web for a computer that will fit your needs, and the best part is it's all free! 
-</div>
-
-<div class="lead" style="padding: 50px; padding-bottom: 0;">
-    <div class="display-4" style="font-size: 30px; margin-bottom: 8px;">
-        Privacy
-    </div>
-    Here at PC Select we beleive in privacy and never track you. Though we do send non-tracking cookies to make sure that you get the right results on your survey.
-</div>
-
-
+    {% include 'includes/explanations.html' %}
 
 {% endblock body %}
 
@@ -62,7 +43,7 @@
 }
 .promo {
     color: #fff;
-    background: url(https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260);
+    background: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260);
     background-size: cover;
     min-height: 400px;
 }

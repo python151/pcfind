@@ -27,7 +27,7 @@ def findPC(request):
     qs = []
     try: 
         for i in q:
-            iObj = Task.objects.filter(id=i.get('id')).get()
+            iObj = Task.objects.filter(id=i).get()
             print(iObj.selected)
             iObj.selected = iObj.selected+1
             iObj.save()

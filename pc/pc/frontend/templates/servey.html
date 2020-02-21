@@ -4,7 +4,9 @@
 
 {% block body %}
 
-
+<div class="display-4" style="padding: 15px 0 0 15px">
+    Select all tasks that apply
+</div>
 
 <div class="groups">
     {% for group in options %} 
@@ -14,13 +16,13 @@
         {% for option in group.options %}
             <div class="option">
                 <p class="option-name align-middle">{{ option.name }}</p>
-                {% if 't' %}
-                <button class="btn btn-success align-middle" id="question-{{ option.id }}" onclick="select({{ option.id }}, {{ group.id }})">
-                    Add
-                </button>
-                {% else %}
+                {% if option.id in s %}
                 <button class="btn btn-danger align-middle" id="question-{{ option.id }}" onclick="remove({{ option.id }}, {{ group.id }})">
                     X
+                </button>
+                {% else %}
+                <button class="btn btn-success align-middle" id="question-{{ option.id }}" onclick="select({{ option.id }}, {{ group.id }})">
+                    Add
                 </button>
                 {% endif %}
             </div>
@@ -55,6 +57,8 @@
     height: 3em;
 
     background-color: rgba(195, 193, 193, 0.603);
+
+    margin-right: 1.7em;
 
     padding-bottom: 1em;
     position: relative;

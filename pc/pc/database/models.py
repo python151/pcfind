@@ -36,3 +36,8 @@ class Group(models.Model):
     options = models.ManyToManyField(Task)
     class Meta():
         app_label='database'
+
+class Email(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=240)
+    email = models.EmailField()
