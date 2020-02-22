@@ -20,6 +20,7 @@ def index(request):
             " brilliant",
             " genius",
             "n amazing",
+            " superior",
         ]
     })
 
