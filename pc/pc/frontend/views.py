@@ -91,9 +91,9 @@ def select(request):
 
     try:
         if request.session.get('group')[0] == 'undefined':
-            ww = request.session.get('group')
-            ww.pop(0)
-            request.session['group'] = ww
+            group = request.session.get('group')
+            group.pop(0)
+            request.session['group'] = group
     except: pass
 
     if a == 'remove':
@@ -103,7 +103,6 @@ def select(request):
 
         s = request.session.get('group')
         if s != None and s != [None]:
-            print(s)
             a1 = s.index(g)
             s.pop(a1)
         request.session['group'] = s
@@ -112,11 +111,9 @@ def select(request):
         if jsonAwnser not in c:
             c.append(jsonAwnser)
             request.session['q'] = c
-        print(g)
         c1 = request.session.get('group')
         c1.append(g)
         request.session['group'] = c1
-    print(request.session.get('q'), request.session.get('group'))
 
     return render(request, "ok")
 
@@ -142,7 +139,7 @@ def mailingListSignUp(request):
     except:
         if name != "" and email != "":
 
-            databaseObj = Email.objects.create(name=name, email=email)
+            databaseObj = Email.objects.create(name=name.title(), email=email)
             databaseObj.save()        
     
     return redirect(ref)

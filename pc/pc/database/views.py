@@ -28,7 +28,6 @@ def findPC(request):
     try: 
         for i in q:
             iObj = Task.objects.filter(id=i).get()
-            print(iObj.selected)
             iObj.selected = iObj.selected+1
             iObj.save()
             choiceObj.tasks.add(iObj)
@@ -38,7 +37,6 @@ def findPC(request):
 
     for i in request.session.get('group'):
         g = Group.objects.filter(id=i).get()
-        print(g.selected)
         g.selected = g.selected+1
         g.save()
 
@@ -55,8 +53,6 @@ def findPC(request):
             highest['gpu'] = i.gpu
         if i.ram > highest.get('ram'):
             highest['ram'] = i.ram
-
-    print(highest)
         
     pcs = PC.objects.filter(
     cpu=highest.get('cpu'),
@@ -68,7 +64,6 @@ def findPC(request):
 
 
     if pcs.count() != 0:
-        print('h')
         return {'pcs' : pcs, 'pcCount' : pcs.count()}
     else: return {}
         

@@ -38,14 +38,11 @@ def getAmazonResults(search):
     headers = {'User-Agent': generate_user_agent(device_type="desktop", os=('mac', 'linux'))}
     r = requests.get(quote_page, headers=headers)
     soup = BeautifulSoup(r.content)
-    print(soup.prettify())
     return soup.find_all('a', attrs={'class' : 'a-link-normal a-text-normal'})
 
 def amazon(search):
     pages = getAmazonResults(search)
-    print(pages)
     for i in pages:
-        print(i['href'])
         quote_page = 'https://amazon.com'+i['href']
         class MyOpener(FancyURLopener):
             version = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; it; rv:1.8.1.11) Gecko/20071127 Firefox/2.0.0.11'
@@ -57,7 +54,6 @@ def amazon(search):
         try: 
             s1 = s.find_all('tr')
             cpuV, ramV, gpuV = 0, 0, 0
-            print(s1)
             for ss in s1:
                 try:
                     s2 = ss.find('th')
@@ -65,10 +61,7 @@ def amazon(search):
                 except:
                     break
 
-                print("for 1 started \n\n\n\n\n\n\n\n\n\n")
-                print(s2, s3)
                 base = s2.text.replace(' ', '')
-                print(base)
                 if base == 'Processor':
                     cpuV = int(s3.text.split(' G')[0].replace(' ', ''))
                 if base == 'RAM':
@@ -88,7 +81,6 @@ def amazon(search):
                         gpuV = 4
                     else:
                         gpuV = 5
-            #print(s)
             try: 
                 val = PC.objects.create(name=soup.find('span', attrs={'id':'productTitle'}).text,
                 link = quote_page,
@@ -98,10 +90,9 @@ def amazon(search):
                 ram = ramV
                 )
                 val.save()
-                print(cpuV, ramV, gpuV)
-            except: print("problem")
-        except: print("prob1")
-    return 'h'
+            except: pass
+        except: pass
+    return None
 
 class options:
     options = [
@@ -136,7 +127,6 @@ def convertToInt(text):
 
 def amazonFill(id):
     get = PC.objects.get(id=id)
-    print(get.name)
     if get == None:
         raise ValueError("id not found")
     elif get.cpu != 0:
@@ -150,8 +140,6 @@ def amazonFill(id):
     table = soup.find('table', attrs={'id' : 'productDetails_techSpec_section_1'})
     rows = table.find_all('tr')
 
-    print(rows)
-
     for row in rows:
         base = row.find("th")
         value = row.find("td")
@@ -163,12 +151,10 @@ def amazonFill(id):
 
         for option in options.options:
             optionBase = option.get("base").replace(" ", "").replace("\n", "")
-            print(optionBase, baseText.replace(" ", "").replace("\n", ""))
             if optionBase == "Card Description":
                 if valueText != "Dedicated":
                     integratedGPU = True
             elif optionBase == baseText.replace(" ", "").replace("\n", ""):
-                print("check")
                 highest = -1
                 intVal = convertToInt(valueText)
                 
@@ -180,7 +166,6 @@ def amazonFill(id):
                     highest = 2
                 if intVal <= option.get("max-1"):
                     highest = 1
-                print(intVal, highest)
                 if optionBase == "Processor":
                     get.cpu = highest
                 elif optionBase == "RAM":
@@ -191,4 +176,4 @@ def amazonFill(id):
                     get.gpu = highest+1 
                 get.save()
             else:
-                print("false")
+                pass
