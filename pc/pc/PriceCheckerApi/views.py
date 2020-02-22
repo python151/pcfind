@@ -120,10 +120,11 @@ class options:
     ]
 
 def convertToInt(text):
-    ret = text.split(" G")
+    ret = text.split("G")
     ret = ret[0].replace(" ", "")
     ret = ret.replace("\n", "")
-    return float(ret)
+    try: return float(ret)
+    except: return 0
 
 def amazonFill(id):
     get = PC.objects.get(id=id)
@@ -138,7 +139,8 @@ def amazonFill(id):
     soup = BeautifulSoup(r.content)
 
     table = soup.find('table', attrs={'id' : 'productDetails_techSpec_section_1'})
-    rows = table.find_all('tr')
+    try: rows = table.find_all('tr')
+    except AttributeError: print("fail"); return None
 
     for row in rows:
         base = row.find("th")
@@ -177,3 +179,50 @@ def amazonFill(id):
                 get.save()
             else:
                 pass
+
+def amazonGPUFill(id):
+    try: get = PC.objects.get(id=id)
+    except: return None
+    if get == None:
+        raise ValueError("id not found")
+    elif get.gpu != 0:
+        raise ValueError("GPU specs already filled")
+    link = get.link
+
+    quote_page = link
+    headers = {'User-Agent': generate_user_agent(device_type="desktop", os=('mac', 'linux'))}
+    r = requests.get(quote_page, headers=headers)
+    soup = BeautifulSoup(r.content)
+
+    table = soup.find("table", attrs={'id':'productDetails_techSpec_section_1'})
+    try:rows = table.find_all("tr")
+    except AttributeError: print("failed"); return None
+    for r in rows:
+        base = r.find("th").text.replace(" ", "").replace("\n", "")
+        val = r.find("td").text.replace(" ", "").replace("\n", "")
+        print(base, val)
+
+        if base == "CardDescription":
+            print("tested")
+            if val == "Integrated":
+                print('igpu')
+                get.gpu = 1
+                get.save()
+                break
+        
+        if base.replace(" ", "") == "GraphicsCardRamSize":
+            print('dedicated')
+            highest = -1
+            intVal = convertToInt(val)
+            option = options.options[2]
+            if intVal > option.get("max-3"):
+                highest = 5
+            if intVal <= option.get("max-3"):
+                highest = 4
+            if intVal <= option.get("max-2"):
+                highest = 3
+            if intVal <= option.get("max-1"):
+                highest = 2
+            get.gpu = highest
+            get.save()
+            break

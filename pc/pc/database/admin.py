@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from django.contrib import admin
-from database.models import Group, Task, PC, Email
+from database.models import Group, Task, PC, Email, Choice
 
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -15,7 +15,11 @@ class PCAdmin(admin.ModelAdmin):
 class EmailAdmin(admin.ModelAdmin):
     list_display = ('email', 'name')
 
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ('id',)
+
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(PC, PCAdmin)
 admin.site.register(Email, EmailAdmin)
+admin.site.register(Choice, ChoiceAdmin)

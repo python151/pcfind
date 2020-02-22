@@ -23,6 +23,7 @@ def GetGroups():
 def findPC(request):
     try: q = request.session.get('q')
     except: q = []
+    print(q)
     choiceObj = Choice.objects.create()
     qs = []
     try: 
@@ -33,7 +34,8 @@ def findPC(request):
             choiceObj.tasks.add(iObj)
             qs.append(iObj)
 
-    except: return {}
+    except:
+        return {}
 
     for i in request.session.get('group'):
         g = Group.objects.filter(id=i).get()
@@ -54,14 +56,15 @@ def findPC(request):
         if i.ram > highest.get('ram'):
             highest['ram'] = i.ram
         
+    print(highest)
     pcs = PC.objects.filter(
-    cpu=highest.get('cpu'),
-      ram=highest.get('ram')).order_by("price")
+    cpu__range=(highest.get('cpu'), 4),
+    gpu__range=(highest.get('gpu'), 5),
+      ram__range=(highest.get('ram'), 4)).order_by("price")
     
     for pc in pcs:
         if pcs.filter(name=pc.name, price=pc.price).all().count() != 1:
             pc.delete()
-
 
     if pcs.count() != 0:
         return {'pcs' : pcs, 'pcCount' : pcs.count()}

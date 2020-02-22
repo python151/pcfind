@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from PriceCheckerApi.views import amazon, ebay, amazonFill
+from PriceCheckerApi.views import amazon, ebay, amazonFill, amazonGPUFill
 import json
 from database.models import Group, Task, Email
 from database.views import GetGroups, findPC
@@ -12,6 +12,9 @@ def notSeen(request, id):
 
 # Static Pages
 def index(request):
+    '''
+    index page view
+    '''
     request.session['page'] = 'Home'
     return render(request, 'index.html', {
         "words" : [
@@ -44,6 +47,8 @@ def statPage(request, name):
 def getPCs(request):
     request.session['page'] = 'PC Select'
     if request.method == 'GET':
+        if len(request.session.get('q')) == 0:
+            return redirect('/survey')
         return render(request, "pcList.html", findPC(request))
 
 def servey(request):
@@ -138,9 +143,8 @@ def mailingListSignUp(request):
 
     except:
         if name != "" and email != "":
-
-            databaseObj = Email.objects.create(name=name.title(), email=email)
-            databaseObj.save()        
+            databaseObj = Email.objects.create(name=name.title(), email=email.lower())
+            databaseObj.save()
     
     return redirect(ref)
 
