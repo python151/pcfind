@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from PriceCheckerApi.views import amazon, ebay, amazonFill, amazonGPUFill
 import json
-from database.models import Group, Task, Email
+from database.models import Group, Task, Email, Lesson
 from database.views import GetGroups, findPC
 from django.views.decorators.csrf import csrf_protect
 # functions
@@ -29,7 +29,7 @@ def index(request):
 
 def statPage(request, name):
     page = name
-    pages = ["about", "privacy-policy", "what-we-do", "cookie-policy", "shout-out"]
+    pages = ["about", "privacy-policy", "what-we-do", "cookie-policy", "shout-out", "contact-us"]
     try:
         if page in pages:
             pageAdapted = page.replace('-', ' ')
@@ -123,11 +123,20 @@ def select(request):
     return render(request, "ok")
 
 def lesson(request, lessonName):
-    lessons=["how-do-computers-work"]
-    if lessonName in lessons:
+    try: 
+        Lesson.objects.filter(name=lessonName)
+        lessons=Lesson.objects.all()
+        ret = []
+        if lessonName == "home":
+            for i, l in enumerate(lessons):
+                ret.append({l.replace("-", " ").title(), })
+            lessons.pop()
+            return render(request, "learn/home.html", {
+                "lessons" : ret
+            })
         request.session['page'] = "Learn"
         return render(request, "learn/"+lessonName+'.html')
-    else:
+    except AttributeError:
         request.session['page'] = "404"
         return render(request, '404.html')
 

@@ -1,0 +1,27 @@
+{% extends 'headers/base.html' %}
+
+{% load static %}
+
+{% block body %}
+<div class="container" style="margin-top: 19px;">
+    <div class="display-4">
+        “Learning never exhausts the mind.”
+    </div>
+    <div class="text-muted">
+        ― Leonardo da Vinci
+    </div>
+    
+    {% for l in lessons %}
+    <div class="card" style="margin-bottom: 5px;">
+        <div class="card-header">
+            {{l.name}}
+        </div>
+        <div class="card-body">
+            {{l.description}}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock body %}

@@ -26,10 +26,10 @@
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item{% if request.session.page == 'Home' %} active {% endif %}">
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {% if request.session.page == 'Shout Out' or  request.session.page == 'Privacy Policy' or request.session.page == 'What We Do' or request.session.page == 'Contact Us' %} active {% endif %}">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 More
               </a>
@@ -37,11 +37,12 @@
                 <a class="dropdown-item" href="/stat/shout-out">Shout Outs</a>
                 <a class="dropdown-item" href="/stat/privacy-policy">Policies</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/stat/what-we-do">Who we are</a>
+                <a class="dropdown-item" href="/stat/what-we-do">What We Do</a>
+                <a class="dropdown-item" href="/stat/contact-us">Contact Us</a>
               </div>
             </li>
             
-            <li class="nav-item">
+            <li class="nav-item {% if request.session.page == 'About' %} active {% endif %}">
               <a class="nav-link" href="/stat/about">About</a>
             </li>
             

@@ -1,0 +1,18 @@
+{% extends 'headers/base.html' %}
+
+{% load static %}
+
+{% block body %}
+
+<div class="container" style="padding-top: 2em;">
+    <div class="display-4" style="margin-bottom:.5em;">How does the dark web work?</div>
+    <div class="lead" style="margin-bottom: 10px;">
+        TOR (the onion router), better known as the dark web is a network of computers that act as nodes which allow anonymous encrypted communications. TOR works by first encrypting the data through layers. Then sending it through the nodes peeling off one layer of encryption each time it goes through a node only to find where it will go next finally exiting the TOR network going to your website. It will then do the reverse back to you.
+    </div>
+    <div style="background:url({% static 'server.jpg' %}); background-size: cover; width: 800px; height: 500px; max-width: 80%;"></div>
+    <div class="lead">
+        TOR is used to maintain anonymousity for informants, and whistleblowers, and allows people to avoid persecution for doing things online if it is restricted in there government.
+    </div>
+</div>
+
+{% endblock body %}
