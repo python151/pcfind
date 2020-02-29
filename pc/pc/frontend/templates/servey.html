@@ -4,6 +4,8 @@
 
 {% block body %}
 
+
+
 <div class="display-4" style="padding: 15px 0 0 15px">
     Select all tasks that apply
 </div>
@@ -30,16 +32,47 @@
         </div>
     </div>
     {% endfor %}
-    <a href="get-pc" class="btn btn-primary">
+    <a onclick="artificialAnimate()" class="btn btn-primary" style="color: white;" data-toggle="modal" data-target="#exampleModalCenter">
         Find My PC!
     </a>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Finding Your PC</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="hidden">
+    <div class="progress" style="height: 2em;">
+        <div class="progress-bar bg-success" role="progressbar" style="width: 0%; " aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="b1"></div>
+    </div>
+</div>
+      </div>
+      <div class="modal-footer" style="float: left;">
+        <div class="lead">
+            <p>Searching <span id="currentText"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock body %}
 
 {% block html %}
 
+<script src="{% static 'javascript/animate.js' %}"></script>
 
 <style>
+#hidden {
+    display: none;
+}
 .options {
     padding-left: 2em;
     
@@ -148,7 +181,7 @@ function select(num, num1) {
 function remove(num, num1) {
     send(num, num1, 'remove');
     console.log("remove")
-    let q = document.getElementById("question-"+num.toString());
+    let q = document.getElementById( "question-" + num.toString() );
     q.setAttribute( "onClick", "select("+num+", "+num1+");" );
     q.innerHTML = "Add"
     q.className = "btn btn-success";

@@ -41,9 +41,13 @@ class Email(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=240)
     email = models.EmailField()
+    class Meta():
+        app_label='database'
 
 class Lesson(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=240)
-    description = models.CharFeied(max_length=600)
+    description = models.CharField(max_length=600)
     htmlFileName = models.CharField(max_length=50)
+    class Meta():
+        app_label='database'

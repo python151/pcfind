@@ -125,9 +125,9 @@ def select(request):
 def lesson(request, lessonName):
     try: 
         Lesson.objects.filter(name=lessonName)
-        lessons=Lesson.objects.all()
-        ret = []
         if lessonName == "home":
+            ret = []
+            lessons=Lesson.objects.all()
             for i, l in enumerate(lessons):
                 ret.append({l.replace("-", " ").title(), })
             lessons.pop()
