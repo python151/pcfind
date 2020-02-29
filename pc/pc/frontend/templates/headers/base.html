@@ -12,6 +12,7 @@
     <title>PC Select</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/base.css" %}" crossorigin="anonymous" />
 
     {% block head %}{% endblock head %}
 
@@ -113,92 +114,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 {% block html %}{% endblock html%}
-
-<style>
-    .nav-side {
-      width: 4em;
-      height: calc(100% - 55px);
-      background-color:#042a2b;
-      padding-right: 0;
-      transition: width 1s;
-      overflow: hidden;
-      position: fixed;
-      top: 55px;
-      max-width: 90%;
-      
-      z-index: 1000;
-    }
-
-    .nav-side:hover {
-      width: 20em;
-      max-width: 90%;
-    }
-
-    .nav-side ul {
-      padding-left: 5em;
-      padding-top: 2em;
-    }
-
-    .nav-side ul li {
-      white-space: nowrap;
-      padding-top: 1em;
-      color:  white;
-      list-style-type: none;
-    }
-
-    .nav-side ul li a {
-      color:  white;
-    }
-
-    .body-w {
-      padding-left: 4em;
-      overflow-x: hidden;
-      margin-top: -5px;
-    }
-
-    .body-f {
-      position: relative;
-      height: 100%;
-      min-height: 100%;
-      box-sizing: border-box;
-      padding-bottom: 1em;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    @media screen and (max-width: 414px) {
-        .nav-side {
-            display: none;
-        }
-        .hidden {
-            display: block;
-        }
-        .body-w {
-            padding-left: 0;
-        }
-    }
-    @media screen and (max-width: 350px) {
-      .body-w {
-        overflow-x: scroll;
-      }
-    }
-
-    .navbar {
-      margin-bottom: 0;
-    }
-
-    .navbar-toggler:focus {
-        outline: none;
-        border: solid skyblue 1px
-    }
-
-    .ads {
-      position: relative;
-      bottom: 0;
-      margin-left: 1em;
-    }
-</style>
 
 </html>

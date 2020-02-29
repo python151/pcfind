@@ -1,3 +1,6 @@
+#hidden {
+    display: none;
+}
 .options {
     padding-left: 2em;
     
@@ -15,6 +18,8 @@
     height: 3em;
 
     background-color: rgba(195, 193, 193, 0.603);
+
+    margin-right: 1.7em;
 
     padding-bottom: 1em;
     position: relative;

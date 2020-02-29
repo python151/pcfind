@@ -32,11 +32,10 @@
         </div>
     </div>
     {% endfor %}
-    <a onclick="artificialAnimate()" class="btn btn-primary" style="color: white;" data-toggle="modal" data-target="#exampleModalCenter">
+    <a data-toggle="modal" data-target="#exampleModalCenter" onclick="artificialAnimate()" class="btn btn-primary {% if s|length < 1 %}disabled{% endif %}" style="color: white;" id="btn">
         Find My PC!
     </a>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -44,9 +43,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenterTitle">Finding Your PC</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body">
         <div id="hidden">
@@ -61,132 +57,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> 
 </div>
 {% endblock body %}
 
 {% block html %}
+<link rel="stylesheet" href="{% static 'css/survey.css' %}"/>
 
+<script src="{% static 'javascript/send.js' %}"></script>
 <script src="{% static 'javascript/animate.js' %}"></script>
-
-<style>
-#hidden {
-    display: none;
-}
-.options {
-    padding-left: 2em;
-    
-}
-
-.groups {
-    padding: 2em 10px 0 2em;
-}
-
-.group {
-    padding-bottom: 2em;
-}
-
-.option {
-    height: 3em;
-
-    background-color: rgba(195, 193, 193, 0.603);
-
-    margin-right: 1.7em;
-
-    padding-bottom: 1em;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    vertical-align: middle;
-    margin-bottom: 5px;
-}
-
-.option-name {
-    position: inline-block;
-    margin: 5px;
-    font-size: 1.2em;
-
-    width: 10em;
-}
-
-.option > .btn {
-    width: 7em;
-    height: 3em;
-
-    font-size: 1em;
-
-    float: right;
-    position: inline-block;
-}
-
-@media screen and (max-width: 4110px) {
-    .options {
-        padding-left: 1em;
-        
-    }
-    
-    .groups {
-        padding: 1em 5px 0 1em;
-    }
-}
-</style>
-<script>function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function send(question, num1, choice) {
-    var url = "/ajax/qa/";
-    var params = "question="+question+"&awnser="+choice+"&group="+num1;
-    var xhr = new XMLHttpRequest();
-    var csrftoken = getCookie('csrftoken');
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    xhr.send(params);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            var response = xhr.responseText;
-            console.log(response);
-            if(response == "ok") {
-                console.log(params);
-            }
-            else {
-                console.log("error");
-            }
-        }
-    }
-}
-
-function select(num, num1) {
-    send(num, num1, 'add');
-    console.log("select");
-    let q = document.getElementById("question-"+num.toString());
-    q.setAttribute( "onClick", "remove("+num+", "+num1+");" );
-    q.innerHTML = "X"
-    q.className = "btn btn-danger";
-}
-
-function remove(num, num1) {
-    send(num, num1, 'remove');
-    console.log("remove")
-    let q = document.getElementById( "question-" + num.toString() );
-    q.setAttribute( "onClick", "select("+num+", "+num1+");" );
-    q.innerHTML = "Add"
-    q.className = "btn btn-success";
-}
-
-</script>
-
 {% endblock html %}

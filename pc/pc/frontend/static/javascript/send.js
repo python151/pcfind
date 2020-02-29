@@ -1,3 +1,5 @@
+var amountSelected = 0;
+
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -38,6 +40,8 @@ function send(question, num1, choice) {
 }
 
 function select(num, num1) {
+    document.getElementById("btn").className = "btn btn-primary";
+    amountSelected++;
     send(num, num1, 'add');
     console.log("select");
     let q = document.getElementById("question-"+num.toString());
@@ -47,11 +51,14 @@ function select(num, num1) {
 }
 
 function remove(num, num1) {
+    amountSelected--;
+    if (amountSelected <= 0) {
+        document.getElementById("btn").className = "btn btn-primary disabled"
+    }
     send(num, num1, 'remove');
     console.log("remove")
-    let q = document.getElementById("question-"+num.toString());
+    let q = document.getElementById( "question-" + num.toString() );
     q.setAttribute( "onClick", "select("+num+", "+num1+");" );
     q.innerHTML = "Add"
     q.className = "btn btn-success";
 }
-

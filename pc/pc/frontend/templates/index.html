@@ -25,37 +25,5 @@
 {% endblock body %}
 
 {% block html %}
-
-<style>
-.promo .lead {
-    color: #cecccc;
-    display: block;
-}
-
-.btn .btn-outline-dark:hover {
-    color:white;
-}
-
-@media screen and (max-width: 500px) {
-    .display-4 {
-        font-size: 3em;
-    }
-}
-.promo {
-    color: #fff;
-    background: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260);
-    background-size: cover;
-    min-height: 400px;
-}
-
-.jumbotron {
-    margin-bottom: 5px;
-}
-
-.jumbo-w {
-    background-color: rgb(5, 44, 95);
-    padding: 5px 0;
-}
-</style>
-
+<link rel="stylesheet" href="{% static 'home/home.css' %}"
 {% endblock html %}
