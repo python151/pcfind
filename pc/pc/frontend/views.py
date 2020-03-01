@@ -124,18 +124,26 @@ def select(request):
 
 def lesson(request, lessonName):
     try: 
-        Lesson.objects.filter(name=lessonName)
-        if lessonName == "home":
-            ret = []
+        lessonName = lessonName.replace("-", " ")
+        print(lessonName)
+        les = Lesson.objects.filter(name= lessonName ).get()
+        if lessonName == "Home":
+            ret = [] 
+            print("g")
             lessons=Lesson.objects.all()
+            print("23")
             for i, l in enumerate(lessons):
-                ret.append({l.replace("-", " ").title(), })
-            lessons.pop()
+                print('323')
+                ret.append({"name":l.name.replace("-", " ").title(), "url":l.name.replace(" ", "-").lower(), "description":l.description})
+                print("333")
+            print("4444")
+            ret.pop(1)
+            print('3333')
             return render(request, "learn/home.html", {
                 "lessons" : ret
             })
         request.session['page'] = "Learn"
-        return render(request, "learn/"+lessonName+'.html')
+        return render(request, "learn/"+les.htmlFileName)
     except AttributeError:
         request.session['page'] = "404"
         return render(request, '404.html')

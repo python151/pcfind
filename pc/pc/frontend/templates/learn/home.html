@@ -14,7 +14,7 @@
     {% for l in lessons %}
     <div class="card" style="margin-bottom: 5px;">
         <div class="card-header">
-            {{l.name}}
+            <a href="/learn/{{l.url}}">{{l.name}}</a>
         </div>
         <div class="card-body">
             {{l.description}}

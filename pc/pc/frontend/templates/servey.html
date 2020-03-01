@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block body %}
-
+<script src="{% static 'javascript/send.js' %}"></script><!-- had to put here to allow for amountSelected variable to be adjusted-->
 
 
 <div class="display-4" style="padding: 15px 0 0 15px">
@@ -19,7 +19,8 @@
             <div class="option">
                 <p class="option-name align-middle">{{ option.name }}</p>
                 {% if option.id in s %}
-                <button class="btn btn-danger align-middle" id="question-{{ option.id }}" onclick="remove({{ option.id }}, {{ group.id }})">
+                <script>amountSelected++;</script>
+                <button class="btn btn-danger align-middle" id="question-{{ option.id }}" onclick="remove({{ option.id }}, {{ group.id }})" style="font-size: 1em;">
                     X
                 </button>
                 {% else %}
@@ -64,6 +65,5 @@
 {% block html %}
 <link rel="stylesheet" href="{% static 'css/survey.css' %}"/>
 
-<script src="{% static 'javascript/send.js' %}"></script>
 <script src="{% static 'javascript/animate.js' %}"></script>
 {% endblock html %}

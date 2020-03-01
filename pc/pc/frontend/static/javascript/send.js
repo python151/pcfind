@@ -1,5 +1,6 @@
 var amountSelected = 0;
 
+// from django documentation
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
