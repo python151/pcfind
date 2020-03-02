@@ -125,6 +125,8 @@ def select(request):
 def lesson(request, lessonName):
     try: 
         lessonName = lessonName.replace("-", " ")
+        lessonName = lessonName.title()
+
         les = Lesson.objects.filter(name= lessonName ).get()
         if lessonName == "Home":
             ret = [] 
@@ -137,7 +139,7 @@ def lesson(request, lessonName):
             })
         request.session['page'] = "Learn"
         return render(request, "learn/"+les.htmlFileName)
-    except:
+    except FileNotFoundError:
         request.session['page'] = "404"
         return render(request, '404.html')
 

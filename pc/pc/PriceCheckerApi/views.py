@@ -1,8 +1,6 @@
-from django.shortcuts import render
 import urllib.request
 import urllib.parse
 from bs4 import BeautifulSoup
-from requests_html import HTMLSession
 from urllib.request import FancyURLopener
 from database.models import PC
 import requests
