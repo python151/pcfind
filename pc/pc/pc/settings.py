@@ -25,8 +25,10 @@ SECRET_KEY = '-9bxu6#cnj%h+d0)ri2e^y-0tdq1)*3=)=k7$pcdmzshn(#b5&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
-
+if DEBUG:
+    ALLOWED_HOSTS = ['localhost']
+else:
+    ALLOWED_HOSTS = ['pcselect.pythonanywhere.com']
 
 # Application definition
 

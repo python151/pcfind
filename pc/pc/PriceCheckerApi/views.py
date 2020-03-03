@@ -13,6 +13,7 @@ def getEbayResults(search):
     soup = BeautifulSoup(page)
     return soup.findAll('div', attrs={'class' : 's-item__info clearfix'})
 
+# spaghetty code af
 def ebay(q):
     results = getEbayResults(q)
     cheapest = results[0]
