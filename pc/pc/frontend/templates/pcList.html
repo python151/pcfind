@@ -3,12 +3,20 @@
 {% block body %}
 <div style="margin: 1.5em 2em;">
     <div class="display-4">
-        {% if pcs is defined %}Sorry, No{% endif %}{{pcCount}} Computers's found
+        {% if pcs is defined %}Sorry, No{% endif %}{{pcCount}} Computer's found
     </div>
 
     {% for pc in pcs %}
     <div class="card" style="margin: 1em;">
-        <a class="lead" href="{{pc.link}}"><span class="success" style="color:green">${{pc.price}}</span> - {{pc.name}}</a><br>
+        <div class="lead success" style="color:green; display: inline-block;">${{pc.price}}</div>
+        <button class="close btn btn-secondary badge badge-secondary" style="width: 50px;
+                                                                            height: 50px;
+                                                                            border-radius: 50%;">
+                ?
+        </button>
+        <span>
+            <a class="lead" href="{{pc.link}}" style="margin: 5px; display: inline-block;">{{pc.name}}</a>
+        </span>
     </div>
     {% endfor %}
     {% if pcs is defined %}
