@@ -8,14 +8,25 @@
 
     {% for pc in pcs %}
     <div class="card" style="margin: 1em;">
-        <div class="lead success" style="color:green; display: inline-block;">${{pc.price}}</div>
-        <button class="close btn btn-secondary badge badge-secondary" style="width: 50px;
-                                                                            height: 50px;
-                                                                            border-radius: 50%;">
-                ?
-        </button>
+        <div class="row">
+            <div class="lead success col" style="color:green; display: inline-block;">${{pc.price}}</div>
+            <div class="col">
+                <a href="why-this/{{pc.id}}">
+                    <button class="btn btn-secondary badge badge-secondary" 
+                    style="width: 25px;
+                        height: 25px;
+                        border-radius: 50%;
+                        float: right;
+                        margin-top: 5px;
+                        margin-right: 5px;"
+                        title="Why This?">
+                        ?
+                    </button>
+                </a>
+            </div>
+        </div>
         <span>
-            <a class="lead" href="{{pc.link}}" style="margin: 5px; display: inline-block;">{{pc.name}}</a>
+            <a class="lead" href="{{pc.link}}" style="margin: 10px 20px; margin-top: 0; display: inline-block;">{{pc.name}}</a>
         </span>
     </div>
     {% endfor %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from PriceCheckerApi.views import amazon, ebay, amazonFill, amazonGPUFill
 import json
-from database.models import Group, Task, Email, Lesson
+from database.models import Group, Task, Email, Lesson, PC
 from database.views import GetGroups, findPC
 from django.views.decorators.csrf import csrf_protect
 # functions
@@ -160,4 +160,8 @@ def mailingListSignUp(request):
     
     return redirect(ref)
 
-
+def whyThis(request, id):
+    pc = PC.objects.filter(id=id).get()
+    return render(request, "why-this.html", {
+        "pc":pc
+    })

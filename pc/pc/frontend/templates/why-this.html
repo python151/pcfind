@@ -1,0 +1,15 @@
+{% extends 'headers/base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="lead" style="margin-top: 5px;">
+        <a href="{{pc.link}}">{{pc.name}}</a>
+    </div>
+    <div class="table">
+        {% if pc.ram > 3 %} Amazing {% elif pc.ram > 2 %} Good {% elif pc.ram > 1 %} Ok {% else %} Decent {% endif %} Ram ( How much you can have loaded up at once )<br>
+        {% if pc.cpu > 3 %} Amazing {% elif pc.cpu > 2 %} Good {% elif pc.cpu > 1 %} Ok {% else %} Decent {% endif %} CPU ( How much you can proccess and how fast it is )<br>
+        {% if pc.gpu > 3 %} Amazing {% elif pc.cpu > 2 %} Good {% elif pc.cpu > 1 %} Ok {% else %} Integrated {% endif %} GPU ( Used for graphics processing mainly useful for things like video editing, games, and machine learning ) <br>
+    </div>
+</div>
+
+{% endblock body %}
