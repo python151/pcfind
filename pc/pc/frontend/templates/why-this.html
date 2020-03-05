@@ -10,6 +10,7 @@
         {% if pc.cpu > 3 %} Amazing {% elif pc.cpu > 2 %} Good {% elif pc.cpu > 1 %} Ok {% else %} Decent {% endif %} CPU ( How much you can proccess and how fast it is )<br>
         {% if pc.gpu > 3 %} Amazing {% elif pc.cpu > 2 %} Good {% elif pc.cpu > 1 %} Ok {% else %} Integrated {% endif %} GPU ( Used for graphics processing mainly useful for things like video editing, games, and machine learning ) <br>
     </div>
+    <iframe src="{{pc.link}}"></iframe>
 </div>
 
 {% endblock body %}

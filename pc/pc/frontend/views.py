@@ -45,7 +45,7 @@ def statPage(request, name):
 # Dynamic Pages
 
 def getPCs(request):
-    request.session['page'] = 'PC Select'
+    request.session['page'] = 'Choose'
     if request.method == 'GET':
         if len(request.session.get('q')) == 0:
             return redirect('/survey')
@@ -124,10 +124,13 @@ def select(request):
 
 def lesson(request, lessonName):
     try: 
+        
         lessonName = lessonName.replace("-", " ")
         lessonName = lessonName.title()
 
         les = Lesson.objects.filter(name= lessonName ).get()
+        
+        request.session['page'] = "Learn"
         if lessonName == "Home":
             ret = [] 
             lessons=Lesson.objects.all()
@@ -137,7 +140,7 @@ def lesson(request, lessonName):
             return render(request, "learn/home.html", {
                 "lessons" : ret
             })
-        request.session['page'] = "Learn"
+        
         return render(request, "learn/"+les.htmlFileName)
     except FileNotFoundError:
         request.session['page'] = "404"
@@ -161,6 +164,7 @@ def mailingListSignUp(request):
     return redirect(ref)
 
 def whyThis(request, id):
+    request.session['page'] = "Why This?"
     pc = PC.objects.filter(id=id).get()
     return render(request, "why-this.html", {
         "pc":pc
