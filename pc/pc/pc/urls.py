@@ -29,6 +29,7 @@ urlpatterns = [
 
     path('survey', front.servey, name='Servey'),
     path('get-pc', front.getPCs, name='Get PC'),
+    path('why-this/<int:id>', front.whyThis, name="Why this"),
 
     path('learn/<slug:lessonName>', front.lesson, name='Learn'),
     path('stat/<slug:name>', front.statPage, name='Static Page'),
