@@ -82,3 +82,12 @@
     bottom: 0;
     margin-left: 1em;
   }
+
+  #menu-btn {
+    width: 10px;
+    height: 50px;
+    background-color: #cccccc;
+    border-radius: 30px;
+    margin-left: 2.8em;
+    margin-top: 6em;
+  }

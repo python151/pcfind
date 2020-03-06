@@ -27,3 +27,19 @@
     background-color: rgb(5, 44, 95);
     padding: 5px 0;
 }
+
+a.btn.btn-primary.btn-lg.mx-auto {
+    background-color: #0000005b;
+    color:#ffffff;
+    width: 40%;
+    margin-bottom: 2em; 
+    padding: 2%; border: 0; 
+    font-weight: lighter; 
+    min-width: 13em;
+    transition: background-color 500ms;
+}
+
+a.btn.btn-primary.btn-lg.mx-auto:hover{
+    background-color: #0000057e;
+    
+}
