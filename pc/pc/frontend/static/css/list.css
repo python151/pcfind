@@ -1,0 +1,8 @@
+.btn.btn-secondary.badge.badge-secondary {
+    background-color: rgb(170, 170, 170);
+    border: none;
+}
+
+.btn.btn-secondary.badge.badge-secondary:hover {
+    background-color: rgb(122, 122, 122);
+}
