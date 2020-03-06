@@ -29,7 +29,7 @@ def index(request):
         ]
     })
 
-# these are the rest of statc pages
+# these are the rest of static pages
 def statPage(request, name):
     # defining variables
     page = name
