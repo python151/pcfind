@@ -17,6 +17,8 @@
     background: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260);
     background-size: cover;
     min-height: 400px;
+    padding-left: 4em;
+    margin-left: -4em;
 }
 
 .jumbotron {
@@ -36,10 +38,10 @@ a.btn.btn-primary.btn-lg.mx-auto {
     padding: 2%; border: 0; 
     font-weight: lighter; 
     min-width: 13em;
-    transition: background-color 500ms;
 }
 
 a.btn.btn-primary.btn-lg.mx-auto:hover{
     background-color: #0000057e;
-    
+    transition: ease-in background-color 500ms;
 }
+
