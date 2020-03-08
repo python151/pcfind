@@ -64,9 +64,12 @@
           </ul>
           <div class="dropdown-divider hidden" style="margin-bottom: 1em;"></div>
           <form class="form-inline my-2 my-lg-0" action="/join/mailing-list" method="POST">
+            <!-- automatically generated inputs -->
             {% csrf_token %}
             <input style="display: none;" name="ref" value="{{ request.get_full_path }}">
+            
             <input class="form-control mr-sm-2" type="text" placeholder="Name" aria-label="Name" name="name">
+            <div class="hidden" style="margin-top: 5px"></div>
             <input class="form-control mr-sm-2" type="email" placeholder="Email" aria-label="Email" name="email">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Join</button>
           </form>
@@ -77,7 +80,9 @@
 
         <div class="body-w">
           <div class="body-f">
+          <!-- block body start -->
           {% block body %}{% endblock body %}
+          <!-- block body end -->
           </div>
           <div class="ads">
             <div>
@@ -101,7 +106,7 @@
         <div class="nav-side">
             
             <ul>
-                <li><a href="/survey">Take the servey</a></li>
+                <li><a href="/survey">Take the survey</a></li>
                 <li><a href="/stat/about">About Us</a></li>
                 <li><a href="/stat/what-we-do">What we do</a></li>
                 <li><a href="/learn/home">Learn Home</a></li>
@@ -115,6 +120,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+<!-- block html start -->
 {% block html %}{% endblock html%}
+<!-- block html end -->
 
 </html>

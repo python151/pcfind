@@ -33,9 +33,16 @@
         </div>
     </div>
     {% endfor %}
-    <a data-toggle="modal" data-target="#exampleModalCenter" onclick="artificialAnimate()" class="btn btn-primary {% if s|length < 1 %}disabled{% endif %}" style="color: white;" id="btn">
-        Find My PC!
-    </a>
+    <div class="text-center">
+      <a data-toggle="modal"
+       data-target="#exampleModalCenter"
+        onclick="artificialAnimate()"
+         class="btn btn-primary {% if s|length < 1 %}disabled{% endif %}" 
+         style="color: white;"
+          id="btn">
+          <span class="align-middle">Find My PC!</span>
+      </a>
+    </div>
 </div>
 
 <!-- Modal -->
