@@ -37,8 +37,24 @@ def statPage(request, name):
     try:
         # check if view allowed
         if page in pages:
+            # replacing encoded characters in name
             pageAdapted = page.replace('-', ' ')
-            request.session['page'] = pageAdapted.title()
+            pageAdapted = pageAdapted.replace('!', ".")
+
+            # ensuring name is less than 8 chars
+            retPageName = []
+            for i, char in enumerate(pageAdapted):
+                if i <= 8:
+                    retPageName.append(char)
+                else:
+                    retPageName[i-3] = "."
+                    retPageName[i-2] = "."
+                    retPageName[i-1] = "."
+                    break
+            retPageName = "".join(retPageName)
+
+            # setting ret var and changing 'page' session var
+            request.session['page'] = retPageName.title()
             ret = render(request, "static/"+page+'.html')
         else:
             # if not allowed raise error
