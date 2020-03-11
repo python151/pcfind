@@ -18,7 +18,7 @@
     background-size: cover;
     min-height: 400px;
     padding-left: 4em;
-    margin-left: -4em;
+    margin-left: -4em;dddd
 }
 
 .jumbotron {
@@ -38,6 +38,7 @@ a.btn.btn-primary.btn-lg.mx-auto {
     padding: 2%; border: 0; 
     font-weight: lighter; 
     min-width: 13em;
+    transition: ease-out background-color 300ms;
 }
 
 a.btn.btn-primary.btn-lg.mx-auto:hover{

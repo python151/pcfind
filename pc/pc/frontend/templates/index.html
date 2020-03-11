@@ -2,12 +2,14 @@
 
 {% load static %}
 
-{% block body %}
-    <link rel="stylesheet" href="{% static 'home/home.css' %}" /> <!-- placed up here to stop blue background on button when initially loading the page-->
+{% block head %}
+<link rel="stylesheet" href="{% static 'home/home.css' %}" /> <!-- placed up here to stop blue background on button when initially loading the page-->
+{% endblock head %}
 
+{% block body %}
     <div style="padding-top: 1em; padding-bottom: 2em;" class="promo text-center flex-column">
         <div class="container img">
-            <h3 class="display-4 flox-row-sm">A{{words|random}} way to shop for computers</h3>
+            <h3 class="display-4 flox-row-sm">A{{request.session.homepageWord}} way to shop for computers</h3>
             <p class="lead flox-row-sm">
                 Take a short survey and allow us to help you find your next computer or PC, and stop guessing at which computer to buy.
             </p>

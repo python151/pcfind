@@ -1,0 +1,80 @@
+{% extends 'headers/base.html' %}
+
+{% load static %}
+
+{% block head %}
+<style>
+    html,
+body {
+  height: 100%;
+}
+
+
+.form-signin {
+  width: 100%;
+  max-width: calc(400px + 30%);
+  padding: 15px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input {
+    margin-bottom: 10px;
+}
+
+.text-center {
+    margin-top: 20px;
+}
+
+input:focus {
+    border: 0;
+}
+</style>
+{% endblock head %}
+
+{% block body %}
+
+<div class="text-center">
+    <form class="form-signin" method="POST">
+        {% csrf_token %}
+
+        <h1 class="h3 mb-3 font-weight-normal">Please enter the following:</h1>
+        
+        <label for="inputName" class="sr-only" aria-required="true">Username</label>
+        <input type="username" id="inputName" class="form-control" placeholder="Username" autocapitalize="words" name="username" required>
+
+        <label for="inputEmail" class="sr-only" aria-required="true">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required autofocus>
+        
+
+        <label for="inputPassword" class="sr-only" aria-required="true">Password</label>
+        <input type="password" id="inputPassword" class="form-control pass" placeholder="Password" name="password" required>
+
+        <br>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+  </form>
+</div>
+{% endblock body %}
+
+{% block html %}
+<script>
+    window.onload = function() {
+        const myInput = document.getElementById('inputPassword');
+        myInput.onpaste = function(e) {
+            e.preventDefault();
+        }
+    }
+</script>
+{% endblock html %}

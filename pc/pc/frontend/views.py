@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect
-from PriceCheckerApi.views import amazon, ebay, amazonFill, amazonGPUFill
-import json
-from database.models import Group, Task, Email, Lesson, PC
-from database.views import GetGroups, findPC
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth import authenticate, login as lin, logout as lout
+from django.contrib.auth.models import User, Group
+
+from random import choice as rchoice
+
+from database.models import Group, Task, Email, Lesson, PC
+
+from PriceCheckerApi.views import amazon, ebay, amazonFill, amazonGPUFill
+from database.views import GetGroups, findPC
+
 # functions
 
 def notSeen(request, id):
@@ -17,9 +23,7 @@ def index(request):
     '''
     index page view
     '''
-    request.session['page'] = 'Home'
-    return render(request, 'index.html', {
-        "words" : [# these are that get chosen on the home page
+    possibleWords = [# these are that get chosen on the home page
             " smarter",
             " better",
             " brilliant",
@@ -27,7 +31,14 @@ def index(request):
             "n amazing",
             " superior",
         ]
-    })
+    # checking if word has already been chosen
+    if request.session.get("homepageWord") in [None, "", "None"]:
+        # choosing word and setting session var
+        request.session["homepageWord"] = rchoice(possibleWords)
+
+    # rendering index page
+    request.session['page'] = 'Home'
+    return render(request, 'index.html')
 
 # these are the rest of static pages
 def statPage(request, name):
@@ -74,8 +85,11 @@ def getPCs(request):
     request.session['page'] = 'Choose'
     if request.method == 'GET':
         # making sure they have taken the survey
-        if len(request.session.get('q')) == 0:
-            return redirect('/survey')
+        try:
+            if len(request.session.get('q')) == 0:
+                raise TypeError('No Awnsers Selected')
+        except TypeError:
+            return redirect("/survey")
         # running the function to find the pc's and returning it to the template
         return render(request, "pcList.html", findPC(request))
 
@@ -129,22 +143,22 @@ def select(request):
     except: pass
 
     # removing or adding var to 'q' variable in session
+    c = request.session.get('q')
+    c1 = request.session.get('group')
     if a == 'remove':
-        c = request.session.get('q')
+        # removing input task
         c.pop(c.index(jsonAwnser))
         request.session['q'] = c
-
-        s = request.session.get('group')
-        if s != None and s != [None]:
-            a1 = s.index(g)
-            s.pop(a1)
-        request.session['group'] = s
+        
+        # removing input group
+        if c1 != None and c1 != [None] and g in c1:
+            a1 = c1.index(g)
+            c1.pop(a1)
+        request.session['group'] = c1
     elif a == 'add':
-        c = request.session.get('q')
         if jsonAwnser not in c:
             c.append(jsonAwnser)
             request.session['q'] = c
-        c1 = request.session.get('group')
         c1.append(g)
         request.session['group'] = c1
 
@@ -219,3 +233,44 @@ def whyThis(request, id):
     return render(request, "why-this.html", {
         "pc":pc
     })
+
+def signUp(request):
+    if request.method == 'GET':
+        return render(request, "users/signup.html")
+    elif request.method == 'POST':
+        data = request.POST.dict()
+        
+        username, email, password = data.get("username"), data.get("email"), data.get("password")
+        
+        try:
+            User.objects.filter(email=email).get()
+            return redirect("/login")
+        except:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+        return redirect('/user/dashboard')
+
+def login(request):
+    if request.method == 'GET':
+        return render(request, "users/login.html")
+    elif request.method == 'POST':
+        data = request.POST.dict()
+        username, password = data.get("username"), data.get("password")
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            lin(request, user)
+            return redirect('/user/dashboard')
+        else:
+            return redirect('/login')
+
+def dashboard(request):
+    if request.user.is_authenticated:
+        return render(request, 'users/dashboard.html')
+    else:
+        return redirect('/login')
+
+def logout(request):
+    lout(request)
+    return redirect('/')

@@ -27,6 +27,8 @@
     justify-content: space-between;
     vertical-align: middle;
     margin-bottom: 5px;
+
+    border-radius: 3px;
 }
 
 .option-name {
@@ -60,4 +62,5 @@
 
 #btn {
     width: calc(100% - 4em);
+    height: 45px;
 }

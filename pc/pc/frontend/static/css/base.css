@@ -9,6 +9,7 @@
     top: 55px;
     max-width: 90%;
     
+    /* placing it above all other elements */
     z-index: 1000;
   }
 
