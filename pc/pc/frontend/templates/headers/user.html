@@ -53,6 +53,12 @@
                                 <span data-feather="file-text"></span>
                                 Current month
                             </a>
+                            {% for pc in request.user.savedpcs.saved.all %}
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file-text"></span>
+                                    {{pc.name}}
+                                </a>
+                            {% endfor %}
                         </li>
                     </ul>
                 </div>

@@ -3,15 +3,22 @@
 {% load static %}
 
 {% block head %}
+<style>
+    .col .card {
+        max-width: 40em;
+        min-width: 300px;
+        width: 400px;
+        height: calc(400px);
+        margin: 10px;
+    }
+</style>
 {% endblock head %}
 
 {% block body %}
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" role="doc-subtitle">
                 <h1 class="h2">Dashboard</h1>
             </div>
-
-            <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
             <h2>PC Results</h2>
             <div class="table-responsive">
@@ -26,9 +33,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for pc in request.user.surveyResults %}
+                    {% for pc in request.user.surveyresults.choice.all %}
                         <tr>
-                            <td>{{pc.id}}</td>
+                            {% if pc.id in request.session.savedPCs %}
+                            <td><a href="/user/pc/unsave/{{pc.id}}"><button>Unsave</button></a></td>
+                            {% else %}
+                            <td><a href="/user/pc/save/{{pc.id}}"><button>Save</button></a></td>
+                            {% endif %}
                             <td>{{pc.name}}</td>
                             <td>{{pc.ram}}</td>
                             <td>{{pc.cpu}}</td>

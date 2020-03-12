@@ -70,6 +70,19 @@ def findPC(request):
         return {'pcs' : pcs, 'pcCount' : pcs.count()}
     else: return {}
         
+def userFindPc(request):
+    if not request.user.is_authenticated:
+        raise AttributeError("User not logged in")
+
+    ret = findPC(request)
+
+    for r in ret.get("pcs"):
+        request.user.surveyresults.choice.add(r)
+        request.user.save()
+    
+    print(request.user.username)
+
+    return ret
         
     
 

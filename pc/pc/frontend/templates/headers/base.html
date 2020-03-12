@@ -107,9 +107,14 @@
         <div class="nav-side">
             
             <ul>
-                <li><a href="/survey">Take the survey</a></li>
+              {% if request.user.is_authenticated %}
+                <li><a class="disabled">Hello, {{request.user.username}}</a></li>
+                <li><a href="/user/dashboard">Dashboard</a></li>
+              {% else %}
+                <li><a href="/take the survey">Take the survey</a></li>
                 <li><a href="/stat/about">About Us</a></li>
                 <li><a href="/stat/what-we-do">What we do</a></li>
+              {% endif %}
                 <li><a href="/learn/home">Learn Home</a></li>
             </ul>
             <div id="menu-btn vertical-center"></div>

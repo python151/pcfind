@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Choice(models.Model):
@@ -51,3 +53,11 @@ class Lesson(models.Model):
     htmlFileName = models.CharField(max_length=50)
     class Meta():
         app_label='database'
+
+class SurveyResults(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    choice = models.ManyToManyField(PC)
+
+class SavedPcs(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    saved = models.ManyToManyField(PC)

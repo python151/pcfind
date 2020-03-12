@@ -5,10 +5,10 @@ from django.contrib.auth.models import User, Group
 
 from random import choice as rchoice
 
-from database.models import Group, Task, Email, Lesson, PC
+from database.models import Group, Task, Email, Lesson, PC, SurveyResults, SavedPcs
 
 from PriceCheckerApi.views import amazon, ebay, amazonFill, amazonGPUFill
-from database.views import GetGroups, findPC
+from database.views import GetGroups, findPC, userFindPc
 
 # functions
 
@@ -91,7 +91,11 @@ def getPCs(request):
         except TypeError:
             return redirect("/survey")
         # running the function to find the pc's and returning it to the template
-        return render(request, "pcList.html", findPC(request))
+        if request.user.is_authenticated:
+            ret = userFindPc(request)
+        else:
+            ret = findPC(request)
+        return render(request, "pcList.html", ret)
 
 def servey(request):
     '''
@@ -248,6 +252,9 @@ def signUp(request):
         except:
             user = User.objects.create_user(username, email, password)
             user.save()
+            sResults = SurveyResults.objects.create(user=user)
+            sResults.save()
+            request.session['surveyResults'] = sResults
         return redirect('/user/dashboard')
 
 def login(request):
@@ -261,9 +268,15 @@ def login(request):
 
         if user is not None:
             lin(request, user)
+            try:
+                sr = SurveyResults.objects.filter(user=user).get()
+            except:
+                sResults = SurveyResults.objects.create(user=user)
+                sResults.save()
+                return redirect('/survey')
             return redirect('/user/dashboard')
         else:
-            return redirect('/login')
+            return redirect('/login') 
 
 def dashboard(request):
     if request.user.is_authenticated:
@@ -274,3 +287,35 @@ def dashboard(request):
 def logout(request):
     lout(request)
     return redirect('/')
+
+def savePC(request, id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    request.user.savedpcs.saved.add(PC.objects.filter(id=id).get())
+    request.user.save()
+
+    request.session['savedPCs'] = []
+
+    for d in request.user.savedpcs.saved.all():
+        savedPCs = request.session.get('savedPCs')
+        savedPCs.append(d.id)
+        request.session['savedPCs'] = savedPCs
+
+    return redirect('/user/dashboard')
+
+def unsavePC(request, id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    request.user.savedpcs.saved.remove(PC.objects.filter(id=id).get())
+    request.user.save()
+
+    request.session['savedPCs'] = []
+
+    for d in request.user.savedpcs.saved.all():
+        savedPCs = request.session.get('savedPCs')
+        savedPCs.append(d.id)
+        request.session['savedPCs'] = savedPCs
+
+    return redirect('/user/dashboard')

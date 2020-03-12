@@ -41,5 +41,7 @@ urlpatterns = [
     path('logout', front.logout, name="Logout"),
 
     path('user/dashboard', front.dashboard, name="Dashboard"),
+    path('user/pc/save/<int:id>', front.savePC, name="Save PC"),
+    path('user/pc/unsave/<int:id>', front.unsavePC, name="UnsavePC")
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
