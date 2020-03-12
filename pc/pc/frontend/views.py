@@ -271,7 +271,13 @@ def login(request):
             try:
                 sr = SurveyResults.objects.filter(user=user).get()
             except:
-                sResults = SurveyResults.objects.create(user=user)
+                s = SurveyResults.objects.create(user=user)
+                s.save()
+                return redirect('/survey')
+            try:
+                sr = SavedPcs.objects.filter(user=user).get()
+            except:
+                sResults = SavedPcs.objects.create(user=user)
                 sResults.save()
                 return redirect('/survey')
             return redirect('/user/dashboard')
@@ -280,6 +286,10 @@ def login(request):
 
 def dashboard(request):
     if request.user.is_authenticated:
+        for d in request.user.savedpcs.saved.all():
+            savedPCs = request.session.get('savedPCs')
+            savedPCs.append(d.id)
+            request.session['savedPCs'] = savedPCs
         return render(request, 'users/dashboard.html')
     else:
         return redirect('/login')
