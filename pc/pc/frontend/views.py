@@ -286,10 +286,18 @@ def login(request):
 
 def dashboard(request):
     if request.user.is_authenticated:
+        try: 
+            request.user.savedpcs
+        except:
+            saved = SavedPcs.objects.create(user=request.user)
+            saved.save()
+        
+        request.session['savedPCs'] = []
         for d in request.user.savedpcs.saved.all():
             savedPCs = request.session.get('savedPCs')
             savedPCs.append(d.id)
             request.session['savedPCs'] = savedPCs
+
         return render(request, 'users/dashboard.html')
     else:
         return redirect('/login')
@@ -298,7 +306,11 @@ def logout(request):
     lout(request)
     return redirect('/')
 
+@csrf_protect
 def savePC(request, id):
+    '''
+        Veiw for user to save a computer
+    '''
     if not request.user.is_authenticated:
         return redirect('/login')
 
@@ -314,7 +326,11 @@ def savePC(request, id):
 
     return redirect('/user/dashboard')
 
+@csrf_protect
 def unsavePC(request, id):
+    '''
+        Veiw for user to unsave a computer
+    ''' 
     if not request.user.is_authenticated:
         return redirect('/login')
 
@@ -329,3 +345,34 @@ def unsavePC(request, id):
         request.session['savedPCs'] = savedPCs
 
     return redirect('/user/dashboard')
+
+def makePCExplanation(pc):
+    ret = "This computer should be good at "
+
+    if pc.ram > 2:
+        ret += "multitasking (running multiple programs at once)"
+    else:
+        ret += "running spreadsheet software, buisiness software, etc."
+    if pc.cpu >= 1:
+        verb = "decently fast"
+        if pc.cpu >= 2: verb = "fast"
+        elif pc.cpu >= 3: verb = "light speed"
+        ret += " and making calculations "+verb+" (useful for web browsing, buisiness software, etc.)"
+    if pc.gpu > 1:
+        verb = "ok"
+        if pc.gpu > 2: verb = "good"
+        if pc.gpu > 3:  verb = "great"
+        elif pc.gpu > 4: verb = "god level"
+        ret += ". Finally finally it should be excellent at displaying "+verb+" graphics"
+    return ret
+
+def comparePC(request, id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    
+    pc = PC.objects.filter(id=id).get()
+
+    return render(request, 'users/compare.html', {
+        'pc' : pc,
+        'explanation' : makePCExplanation(pc)
+    })

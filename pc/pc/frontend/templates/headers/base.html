@@ -110,10 +110,11 @@
               {% if request.user.is_authenticated %}
                 <li><a class="disabled">Hello, {{request.user.username}}</a></li>
                 <li><a href="/user/dashboard">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
               {% else %}
                 <li><a href="/take the survey">Take the survey</a></li>
-                <li><a href="/stat/about">About Us</a></li>
-                <li><a href="/stat/what-we-do">What we do</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/Sign-Up">Sign Up</a></li>
               {% endif %}
                 <li><a href="/learn/home">Learn Home</a></li>
             </ul>

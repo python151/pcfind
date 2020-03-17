@@ -1,0 +1,18 @@
+.col .card {
+    max-width: 40em;
+    min-width: 300px;
+    width: 400px;
+    height: calc(400px);
+    margin: 10px;
+}
+
+.name {
+    color: black;
+}
+
+.name:hover {
+    color: black;
+    
+    cursor: default;
+}
+

@@ -1,0 +1,16 @@
+{% extends "headers/user.html" %}
+
+{% block body %}
+
+<main class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-top: 40px; margin-bottom: 100px;">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <span class="display-4">{{ pc.name }}</span>
+    </div>
+    <div class="lead">
+        {{ explanation }} and <strong> It cost ${{ pc.price }}.</strong>
+    </div>
+    <div class="lead" style="margin-top: 20px;">
+        <a href="{{ pc.link }}">Click here to buy this computer</a>
+    </div>
+</main>
+{% endblock body %}

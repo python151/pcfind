@@ -1,51 +1,32 @@
-(function () {
-    'use strict'
-  
-    feather.replace()
-  
-    // Graphs
-    var ctx = document.getElementById('myChart')
-    // eslint-disable-next-line no-unused-vars
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [
-          'Sunday',
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday'
-        ],
-        datasets: [{
-          data: [
-            15339,
-            21345,
-            18483,
-            24003,
-            23489,
-            24092,
-            12034
-          ],
-          lineTension: 0,
-          backgroundColor: 'transparent',
-          borderColor: '#007bff',
-          borderWidth: 4,
-          pointBackgroundColor: '#007bff'
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: false
-            }
-          }]
-        },
-        legend: {
-          display: false
-        }
-      }
-    })
-  }())
+var starting;
+function shrink(starting, AmountOfAllowedChars) {
+  /* var starting: int */
+  var ret = "";
+  var flag = false;
+
+  starting = starting.split('')
+
+  for(i = 0; i<=AmountOfAllowedChars; i++) {
+    ret = ret + starting[i];
+    if (i == AmountOfAllowedChars) {
+      flag = true;
+    }
+  }
+
+  if (flag) {
+    ret = ret + "...";
+  }
+
+  return ret;
+}
+
+function onPageFunc() {
+  var allowedChars = 30;
+  var i = 1;
+  while (i <= savedComputers) {
+    let old = document.getElementById(i);
+    old.innerHTML = shrink(old.innerText, allowedChars);
+    i++;
+  }
+}
+

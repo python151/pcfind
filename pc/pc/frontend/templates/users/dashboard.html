@@ -3,15 +3,7 @@
 {% load static %}
 
 {% block head %}
-<style>
-    .col .card {
-        max-width: 40em;
-        min-width: 300px;
-        width: 400px;
-        height: calc(400px);
-        margin: 10px;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'css/dash.css' %}" />
 {% endblock head %}
 
 {% block body %}
@@ -25,22 +17,30 @@
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
-                            <th>Status</th>
-                            <th>Name</th>
-                            <th>RAM</th>
-                            <th>GPU</th>
-                            <th>CPU</th>
+                            <th>Status <br></th>
+                            <th>Name <br></th>
+                            <th>(1-4) <br> RAM</th>
+                            <th>(1-5) <br> GPU</th>
+                            <th>(1-4) <br> CPU</th>
                         </tr>
                     </thead>
                     <tbody>
                     {% for pc in request.user.surveyresults.choice.all %}
                         <tr>
                             {% if pc.id in request.session.savedPCs %}
-                            <td><a href="/user/pc/unsave/{{pc.id}}"><button>Saved</button></a></td>
+                            <td class="unsave">
+                                <a href="/user/pc/unsave/{{pc.id}}" class="btn btn-secondary">
+                                    Saved
+                                </a>
+                            </td>
                             {% else %}
-                            <td><a href="/user/pc/save/{{pc.id}}"><button>Save</button></a></td>
+                            <td class="save">
+                                <a href="/user/pc/save/{{pc.id}}" class="btn btn-primary">
+                                    Save
+                                </a>
+                            </td>
                             {% endif %}
-                            <td>{{pc.name}}</td>
+                            <td><a href="/user/pc/compare/{{pc.id}}" class="name">{{pc.name}}</a></td>
                             <td>{{pc.ram}}</td>
                             <td>{{pc.cpu}}</td>
                             <td>{{pc.gpu}}</td>
