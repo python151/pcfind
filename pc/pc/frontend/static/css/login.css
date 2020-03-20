@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: calc(400px + 30%);
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    border: none;
+    z-index: 2;
+}
+
+.form-signin input {
+    margin-bottom: 10px;
+}
+
+.text-center {
+    margin-top: 20px;
+}
+
+input:focus {
+    border: 0;
+}
+
+.text-center form.form-signin .btn.btn-lg.btn-primary.btn-block {
+    background-color: default;
+    transition: ease-in .3s;
+}
+
+.text-center form.form-signin .btn.btn-lg.btn-primary.btn-block:hover {
+    background-color: cornflowerblue;
+    border: 1px cornflowerblue solid;
+    transition: ease-in-out .5s;
+}

@@ -19,6 +19,7 @@
                         <tr>
                             <th>Status <br></th>
                             <th>Name <br></th>
+                            <th class="text-center" style="width:75px">Price <br></th>
                             <th>(1-4) <br> RAM</th>
                             <th>(1-5) <br> GPU</th>
                             <th>(1-4) <br> CPU</th>
@@ -41,6 +42,11 @@
                             </td>
                             {% endif %}
                             <td><a href="/user/pc/compare/{{pc.id}}" class="name">{{pc.name}}</a></td>
+                            <td class="text-center">
+                                <div class="price">
+                                    ${{pc.price}}
+                                </div>
+                            </td>
                             <td>{{pc.ram}}</td>
                             <td>{{pc.cpu}}</td>
                             <td>{{pc.gpu}}</td>

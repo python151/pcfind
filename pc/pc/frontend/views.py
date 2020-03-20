@@ -2,11 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login as lin, logout as lout
 from django.contrib.auth.models import User, Group
-
 from random import choice as rchoice
-
 from database.models import Group, Task, Email, Lesson, PC, SurveyResults, SavedPcs
-
 from PriceCheckerApi.views import amazon, ebay, amazonFill, amazonGPUFill
 from database.views import GetGroups, findPC, userFindPc
 
@@ -15,8 +12,6 @@ from database.views import GetGroups, findPC, userFindPc
 def notSeen(request, id):
     if {'id' : id} in request.session.get('q'): return False
     return True
-
-# Static Pages
 
 # index page
 def index(request):
@@ -238,36 +233,82 @@ def whyThis(request, id):
         "pc":pc
     })
 
+@csrf_protect
 def signUp(request):
+    # checking method
     if request.method == 'GET':
+        # checking if signupError exists
+        if request.session.get('signupError') is not None:
+            signupError = request.session.get('signupError')
+            # checking if signup error has been shown to user yet (if the page has been reloaded)
+            if not signupError.get('reloaded'):
+                # setting reloaded to True
+                signupError['reloaded'] = True
+                request.session['signupError'] = signupError
+            else:
+                # setting signup error to none
+                request.session['signupError'] = None
+        # returning template
         return render(request, "users/signup.html")
     elif request.method == 'POST':
+        # getting data from request
         data = request.POST.dict()
-        
         username, email, password = data.get("username"), data.get("email"), data.get("password")
-        
+        # checking if user already exists
         try:
-            User.objects.filter(email=email).get()
-            return redirect("/login")
+            try: 
+                User.objects.filter(email=email).get()
+                email = True
+            except: 
+                User.objects.filter(username=username).get()
+                username = True
+            if email: typeAlreadyInUse = "email"; email=False
+            else: typeAlreadyInUse = "username"
+            request.session['signupError'] = {
+                "message" : "Account with that "+typeAlreadyInUse+" already exists.",
+                "reloaded" : False,
+            }
+            return redirect("/sign-up")
         except:
+            # creating user object
             user = User.objects.create_user(username, email, password)
             user.save()
+            # making surveyResults objects to extend user
             sResults = SurveyResults.objects.create(user=user)
             sResults.save()
             request.session['surveyResults'] = sResults
         return redirect('/user/dashboard')
 
+@csrf_protect
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('/user/dashboard')
+    # checking method
     if request.method == 'GET':
+        # checking if loginError exists
+        if request.session.get('loginError') is not None:
+            loginError = request.session.get('loginError')
+            # checking if login error has been shown to user yet (if the page has been reloaded)
+            if not loginError.get('reloaded'):
+                # setting reloaded to True
+                loginError['reloaded'] = True
+                request.session['loginError'] = loginError
+            else:
+                # setting login error to none
+                request.session['loginError'] = None
+        # returning template
         return render(request, "users/login.html")
     elif request.method == 'POST':
+        # getting data
         data = request.POST.dict()
         username, password = data.get("username"), data.get("password")
 
+        # authenticating user
         user = authenticate(username=username, password=password)
-
         if user is not None:
+            # loggin in user
             lin(request, user)
+            # checksums
             try:
                 sr = SurveyResults.objects.filter(user=user).get()
             except:
@@ -280,50 +321,68 @@ def login(request):
                 sResults = SavedPcs.objects.create(user=user)
                 sResults.save()
                 return redirect('/survey')
+            # redirecting to dashboard
             return redirect('/user/dashboard')
         else:
+            # setting login error
+            request.session['loginError'] = {
+                "message" : "Username and password combination not found.",
+                "reloaded" : False,
+            }
+            # authenication failed sending to login page
             return redirect('/login') 
 
 def dashboard(request):
+    # checking if user is logged in
     if request.user.is_authenticated:
+        # checksums
         try: 
             request.user.savedpcs
         except:
             saved = SavedPcs.objects.create(user=request.user)
             saved.save()
         
+        # getting pcs from database and storing them in session
         request.session['savedPCs'] = []
         for d in request.user.savedpcs.saved.all():
             savedPCs = request.session.get('savedPCs')
             savedPCs.append(d.id)
             request.session['savedPCs'] = savedPCs
 
+        # returning template
         return render(request, 'users/dashboard.html')
     else:
+        # sending to login page
         return redirect('/login')
 
 def logout(request):
-    lout(request)
-    return redirect('/')
+    if request.user.is_authenticated:
+        lout(request)
+        return redirect('/')
+    return redirect('/login')
 
 @csrf_protect
 def savePC(request, id):
     '''
         Veiw for user to save a computer
     '''
+    # checking if user is logged in
     if not request.user.is_authenticated:
+        # redirecting to login page
         return redirect('/login')
 
+    # adding PC to savedPC table
     request.user.savedpcs.saved.add(PC.objects.filter(id=id).get())
     request.user.save()
 
+    # getting pcs from database and storing them in session
     request.session['savedPCs'] = []
-
     for d in request.user.savedpcs.saved.all():
         savedPCs = request.session.get('savedPCs')
         savedPCs.append(d.id)
         request.session['savedPCs'] = savedPCs
-
+    
+    # redirecting to dashboard
     return redirect('/user/dashboard')
 
 @csrf_protect
@@ -331,22 +390,28 @@ def unsavePC(request, id):
     '''
         Veiw for user to unsave a computer
     ''' 
+    # checking if user is authenicated
     if not request.user.is_authenticated:
         return redirect('/login')
-
+    
+    # removing pc from savedpcs table
     request.user.savedpcs.saved.remove(PC.objects.filter(id=id).get())
     request.user.save()
 
+    # getting pcs froom database and storing them in session
     request.session['savedPCs'] = []
-
     for d in request.user.savedpcs.saved.all():
         savedPCs = request.session.get('savedPCs')
         savedPCs.append(d.id)
         request.session['savedPCs'] = savedPCs
 
+    # redirecting to dashboard
     return redirect('/user/dashboard')
 
 def makePCExplanation(pc):
+    ''' 
+        View to make summary of a computer
+    ''' 
     ret = "This computer should be good at "
 
     if pc.ram > 2:
@@ -367,11 +432,19 @@ def makePCExplanation(pc):
     return ret
 
 def comparePC(request, id):
+    ''' 
+        View for user to compare computer
+    '''
+    # checking if user is authenicated
     if not request.user.is_authenticated:
         return redirect('/login')
     
+    request.session['page'] = "Compare"
+    
+    # getting pc from database
     pc = PC.objects.filter(id=id).get()
 
+    # returning template
     return render(request, 'users/compare.html', {
         'pc' : pc,
         'explanation' : makePCExplanation(pc)
