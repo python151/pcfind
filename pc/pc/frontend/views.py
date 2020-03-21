@@ -276,7 +276,6 @@ def signUp(request):
             # making surveyResults objects to extend user
             sResults = SurveyResults.objects.create(user=user)
             sResults.save()
-            request.session['surveyResults'] = sResults
         return redirect('/user/dashboard')
 
 @csrf_protect
