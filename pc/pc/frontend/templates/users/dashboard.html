@@ -12,7 +12,7 @@
                 <h1 class="h2">Dashboard</h1>
             </div>
 
-            <h2>PC Results</h2>
+            <h2 class="pos-inline-block">PC Results</h2> <div class="pos-inline-block"><button class="advanced-btn" id="btn" onclick="hideAdvanced()">Advanced</button></div>
             <div class="table-responsive">
                 <table class="table table-striped table-sm">
                     <thead>
@@ -20,9 +20,10 @@
                             <th>Status <br></th>
                             <th>Name <br></th>
                             <th class="text-center" style="width:75px">Price <br></th>
-                            <th>(1-4) <br> RAM</th>
-                            <th>(1-5) <br> GPU</th>
-                            <th>(1-4) <br> CPU</th>
+                            <th><div class="advanced">(1-4) <br> RAM</div></th>
+                            <th><div class="advanced">(1-5) <br> GPU</div></th>
+                            <th><div class="advanced">(1-4) <br> CPU</div></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -47,14 +48,20 @@
                                     ${{pc.price}}
                                 </div>
                             </td>
-                            <td>{{pc.ram}}</td>
-                            <td>{{pc.cpu}}</td>
-                            <td>{{pc.gpu}}</td>
+                            <td><div class="advanced">{{pc.ram}}</div></td>
+                            <td><div class="advanced">{{pc.cpu}}</div></td>
+                            <td><div class="advanced">{{pc.gpu}}</div></td>
+                            
                         </tr>
                     {% endfor %}
-                        
+                    
                     </tbody>
                 </table>
             </div>
         </main>
+        
 {% endblock body %}
+
+{% block html %}
+<script type="text/javascript"> hideAdvanced(); </script>
+{% endblock html %}

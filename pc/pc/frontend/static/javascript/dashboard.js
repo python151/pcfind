@@ -30,3 +30,25 @@ function onPageFunc() {
   }
 }
 
+function hideAdvanced() {
+  console.log("advanced being hidden");
+  var advanced = document.getElementsByClassName("advanced");
+  for (i=0; i<advanced.length; i++) {
+    let current = advanced[i];
+    current.style.display = "none";
+  }
+  document.getElementById("btn").setAttribute("onClick", "showAdvanced()");
+  document.getElementById("btn").innerText = "Advanced";
+}
+
+function showAdvanced() {
+  console.log("advanced being shown");
+  var advanced = document.getElementsByClassName("advanced");
+  for (i=0; i<advanced.length; i++) {
+    let current = advanced[i];
+    current.style.display = "initial";
+    console.log(i)
+  }
+  document.getElementById("btn").setAttribute("onClick", "hideAdvanced()");
+  document.getElementById("btn").innerText = "Advanced";
+}

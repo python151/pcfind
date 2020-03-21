@@ -19,3 +19,35 @@
 .price {
     color: green;
 }
+
+.advanced-btn {
+    /* just some basic destyling */
+    border: none;
+    background-color: transparent;
+    padding: none;
+    margin-top: -.9em;
+    margin-bottom: 5px;
+
+
+    color: blue;
+    height: 19px;
+    width: 5em;
+
+    float: right;
+}
+
+.advanced-btn:focus {
+    border: none;
+}
+
+.advanced-btn:hover {
+    text-decoration: underline;
+}
+
+.advanced-btn:active {
+    text-decoration: solid;
+}
+
+.pos-inline-block {
+    position: inline-block;
+}
