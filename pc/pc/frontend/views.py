@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login as lin, logout as lout
 from django.contrib.auth.models import User, Group
 from random import choice as rchoice
-from database.models import Group, Task, Email, Lesson, PC, SurveyResults, SavedPcs
+from database.models import Group, Task, Email, Lesson, PC, SurveyResults, SavedPcs, BookmarkedLessons
 from PriceCheckerApi.views import amazon, ebay, amazonFill, amazonGPUFill
 from database.views import GetGroups, findPC, userFindPc
 
@@ -161,7 +161,7 @@ def select(request):
         c1.append(g)
         request.session['group'] = c1
 
-    return render(request, "ok")
+    return render(request, "responses/ok")
 
 def lesson(request, lessonName):
     '''
@@ -448,3 +448,40 @@ def comparePC(request, id):
         'pc' : pc,
         'explanation' : makePCExplanation(pc)
     })
+
+@csrf_protect
+def bookmark(request):
+    # checking if everything went right
+    print("start")
+    if not request.user.is_authenticated:
+        return render(request, "responses/login-required")
+    elif request.method != "POST":
+        return render(request, "responses/invalid-method")
+    print("test1")
+    # getting post data
+    data = request.POST.dict()
+    lessonID = data.get('lessonID')
+    action = data.get('action')
+
+    # saving lesson to BookmarkedLessons
+    try: request.user.BookmarkedLessons
+    except:
+        print("creating bookmark")
+        newObj = BookmarkedLessons.objects.create(user=request.user)
+        newObj.save()
+        print("bookmark created")
+    
+
+    if action == "save":
+        lesson = Lesson.objects.filter(id=lessonID).get()
+        request.user.BookmarkedLessons.add(lesson)
+        request.user.BookmarkedLessons.save()
+    elif action == "unsave":
+        if not request.user.BookmarkedLessons.lessons.filter(id=lessonID).exists():
+            return render(request, "responses/not-allowed")
+        lesson = Lesson.objects.filter(id=lessonID).get()
+        request.user.BookmarkedLessons.remove(lesson)
+        request.user.BookmarkedLessons.save()
+
+    print("finish")
+    return render(request, "responses/ok")

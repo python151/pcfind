@@ -61,3 +61,7 @@ class SurveyResults(models.Model):
 class SavedPcs(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     saved = models.ManyToManyField(PC)
+
+class BookmarkedLessons(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    lessons = models.ManyToManyField(Lesson)

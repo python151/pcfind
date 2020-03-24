@@ -21,9 +21,17 @@
         <div class="card-body">
             {{l.description}}
         </div>
+        <button class="btn btn-primary" onlclick="bookmark({{ l.id }});">
+            Bookmark
+        </button>
     </div>
     {% endfor %}
 </div>
 
 
 {% endblock body %}
+
+{% block html %}
+    <script src="{% static 'javascript/send.js' %}"></script>
+    <script src="{% static 'javascript/bookmark.js' %}"></script>
+{% endblock html %}

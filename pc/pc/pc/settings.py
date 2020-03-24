@@ -23,12 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-9bxu6#cnj%h+d0)ri2e^y-0tdq1)*3=)=k7$pcdmzshn(#b5&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     ALLOWED_HOSTS = ['localhost']
 else:
-    ALLOWED_HOSTS = ['pcselect.pythonanywhere.com']
+    ALLOWED_HOSTS = ['pcselect.pythonanywhere.com', 'localhost']
 
 # Application definition
 
@@ -120,10 +120,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "frontend/static"),
-]
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-STATIC_ROOT = '/frontend/static/'
+if not DEBUG:
+    STATIC_URL = 'http://localhost:5000/'
+else:
+    STATIC_URL = 'static/'
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "frontend/static"),
+    ]
+    #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+    STATIC_ROOT = '/frontend/static/'

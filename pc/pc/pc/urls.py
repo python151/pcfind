@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls), 
 
     path('ajax/qa/', front.select),
+    path('ajax/bookmark/', front.bookmark),
 
     path('', front.index, name='Home'),
 
@@ -45,6 +46,7 @@ urlpatterns = [
     path('user/dashboard', front.dashboard, name="Dashboard"),
     path('user/pc/save/<int:id>', front.savePC, name="Save PC"),
     path('user/pc/unsave/<int:id>', front.unsavePC, name="Unsave PC"),
-    path('user/pc/compare/<int:id>', front.comparePC, name="Compare PC")
+    path('user/pc/compare/<int:id>', front.comparePC, name="Compare PC"),
+
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
